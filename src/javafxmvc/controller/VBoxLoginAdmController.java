@@ -54,9 +54,7 @@ public class VBoxLoginAdmController implements Initializable {
     
     @FXML
     public void login() {
-        labelErroUsuario.setText(null);
-        labelErroSenha.setText(null);
-        labelNotFound.setText(null);
+        limparErros();
 
         String usuario = textFieldUsuario.getText();
         String senha = passwordFieldSenha.getText();
@@ -83,5 +81,11 @@ public class VBoxLoginAdmController implements Initializable {
 
     public void switchToLoginFunc() throws IOException {
         Main.setRoot("view/VBoxLoginFunc");
+    }
+
+    public void limparErros() {
+        labelErroUsuario.setText(null);
+        labelErroSenha.setText(null);
+        labelNotFound.setText(null);
     }
 }
