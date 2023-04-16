@@ -11,20 +11,35 @@
 
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.javafxmvc.controller.VBoxLoginAdmController">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-      <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="380.0">
+      <ImageView fitHeight="125.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="380.0">
          <children>
             <Label layoutX="93.0" layoutY="14.0" styleClass="h1" text="Login Administrador" />
-            <Group layoutY="76.0">
+            <Label fx:id="labelNotFound" layoutX="126.0" layoutY="70.0" styleClass="not-found" />
+            <Group layoutY="109.0">
                <children>
-                  <Label text="Usuário" />
-                  <TextField fx:id="textFieldUsuario" layoutY="28.0" styleClass="input" />
-                  <Label layoutX="4.0" layoutY="103.0" text="Senha" />
-                  <PasswordField fx:id="passwordFieldSenha" layoutY="135.0" styleClass="input" />
-                  <Button fx:id="buttonLogin" layoutY="213.0" mnemonicParsing="false" onAction="#login" styleClass="login" text="Login" />
+                  <Group>
+                     <children>
+                        <Label text="Usuário" />
+                        <TextField fx:id="textFieldUsuario" layoutY="28.0" styleClass="input" />
+                        <Label fx:id="labelErroUsuario" layoutX="1.0" layoutY="87.0" styleClass="error" />
+                     </children>
+                  </Group>
+                  <Group layoutY="114.0">
+                     <children>
+                        <Label layoutX="4.0" text="Senha" />
+                        <PasswordField fx:id="passwordFieldSenha" layoutY="32.0" styleClass="input" />
+                        <Label fx:id="labelErroSenha" layoutX="1.0" layoutY="91.0" styleClass="error" />
+                     </children>
+                  </Group>
+                  <Group layoutX="1.0" layoutY="239.0">
+                     <children>
+                        <Button fx:id="buttonLogin" mnemonicParsing="false" onAction="#login" styleClass="login" text="Login" />
+                        <Button fx:id="buttonLink" layoutX="88.0" layoutY="77.0" mnemonicParsing="false" onAction="#switchToLoginFunc" styleClass="link" text="Alterar para Login Funcionário" />
+                     </children>
+                  </Group>
                </children>
             </Group>
-            <Button fx:id="buttonLink" layoutX="88.0" layoutY="372.0" mnemonicParsing="false" onAction="#switchToLoginFunc" styleClass="link" text="Alterar para Login Funcionário" />
          </children>
       </AnchorPane>
    </children>

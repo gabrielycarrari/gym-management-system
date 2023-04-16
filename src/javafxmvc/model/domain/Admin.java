@@ -30,8 +30,4 @@ public class Admin implements Serializable {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    public String toString() {
-        return "Id: " + this.idAdmin + "\tUsuário: " + this.usuario + "\tSenha: " + this.senha;
-    }
 }

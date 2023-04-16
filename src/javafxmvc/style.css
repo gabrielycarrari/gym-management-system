@@ -52,3 +52,12 @@
     -fx-cursor: hand;
     -fx-underline: true;
 }
+
+.error {
+    -fx-text-fill: red;
+    -fx-font-size: 10px;
+}
+
+.not-found {
+    -fx-text-fill: red;
+}

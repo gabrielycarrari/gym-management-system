@@ -18,7 +18,7 @@ public class Main extends Application {
         scene = new Scene(root);
         
         stage.setScene(scene);
-        stage.setTitle("Sistema de Academia - Login Administrador");
+        stage.setTitle("Sistema de Academia - Login");
         stage.setHeight(720);
         stage.setWidth(1280);
         stage.setResizable(false);

@@ -6,8 +6,8 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import src.javafxmvc.Main;
@@ -32,6 +32,15 @@ public class VBoxLoginAdmController implements Initializable {
     @FXML
     private Button buttonLink;
 
+    @FXML
+    private Label labelErroUsuario;
+
+    @FXML
+    private Label labelErroSenha;
+
+    @FXML
+    private Label labelNotFound;
+
 
     //Atributos para manipulação de Banco de Dados
     private final Database database = DatabaseFactory.getDatabase("postgresql");
@@ -45,6 +54,10 @@ public class VBoxLoginAdmController implements Initializable {
     
     @FXML
     public void login() {
+        labelErroUsuario.setText(null);
+        labelErroSenha.setText(null);
+        labelNotFound.setText(null);
+
         String usuario = textFieldUsuario.getText();
         String senha = passwordFieldSenha.getText();
 
@@ -52,18 +65,18 @@ public class VBoxLoginAdmController implements Initializable {
             Admin admin = adminDAO.buscar(usuario, senha);
 
             if(admin != null) {
-                System.out.println("User: " + usuario + "\tPass: " + senha);
+                System.out.println("Sucesso");
             }
             else {
-                System.out.println("Usuário não encontrado");
+                labelNotFound.setText("Usuário não encontrado");
             }
         }
         else {
             if(usuario.isEmpty()) {
-                System.out.println("O Campo Usuário não pode estar vazio");
+                labelErroUsuario.setText("O campo Usuário não pode estar vazio");
             }
             if(senha.isEmpty()) {
-                System.out.println("O Campo Senha não pode estar vazio");
+                labelErroSenha.setText("O campo Senha não pode estar vazio");
             }
         }
     }
