@@ -1,3 +1,7 @@
+.body {
+    -fx-background-color: #FFFFFF;  
+}
+
 .input {
     -fx-pref-height: 48px;
     -fx-pref-width: 380px;
