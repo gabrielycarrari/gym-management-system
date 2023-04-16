@@ -66,14 +66,16 @@ public class VBoxLoginFuncController implements Initializable {
     }
     
     @FXML
-    public void login() {
+    public void login() throws IOException {
         limparErros();
 
         String usuario = textFieldUsuario.getText();
         String senha = passwordFieldSenha.getText();
 
         if(!usuario.isEmpty() && !senha.isEmpty()) {
-            labelNotFound.setText("Usuário não encontrado");
+            switchToMainFunc();
+            // Implementar buscar() funcionário
+            // labelNotFound.setText("Usuário não encontrado");
         }
         else {
             if(usuario.isEmpty()) {
@@ -87,6 +89,10 @@ public class VBoxLoginFuncController implements Initializable {
 
     public void switchToLoginAdm() throws IOException {
         Main.setRoot("view/VBoxLoginAdm");
+    }
+
+    public void switchToMainFunc() throws IOException {
+        Main.setRoot("view/AnchorPaneMainFunc");
     }
 
     public void limparErros() {
