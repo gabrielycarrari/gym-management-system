@@ -14,6 +14,8 @@ import javafx.scene.control.TextField;
 import java.sql.Connection;
 
 import src.javafxmvc.Main;
+import src.javafxmvc.model.dao.FuncionarioDAO;
+import src.javafxmvc.model.domain.Funcionario;
 import src.javafxmvc.model.database.Database;
 import src.javafxmvc.model.database.DatabaseFactory;
 
@@ -44,11 +46,11 @@ public class VBoxLoginFuncController implements Initializable {
     //Atributos para manipulação de Banco de Dados
     private final Database database = DatabaseFactory.getDatabase("postgresql");
     private final Connection connection = database.conectar();
-    // Create DAO
+    private final FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // Set DAO connection
+        funcionarioDAO.setConnection(connection);
     }
     
     @FXML
@@ -59,7 +61,15 @@ public class VBoxLoginFuncController implements Initializable {
         String senha = passwordFieldSenha.getText();
 
         if(!usuario.isEmpty() && !senha.isEmpty()) {
-            labelNotFound.setText("Usuário não encontrado");
+            Funcionario funcionario = funcionarioDAO.buscar(usuario, senha);
+
+            if(funcionario != null) {
+                System.out.println("Sucesso");
+                //mudar para a tela principal
+            }
+            else {
+                labelNotFound.setText("Usuário não encontrado");
+            }
         }
         else {
             if(usuario.isEmpty()) {
