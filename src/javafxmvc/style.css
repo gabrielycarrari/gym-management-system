@@ -1,8 +1,6 @@
 .input {
-    -fx-pref-height: 48px;
     -fx-pref-width: 380px;
     -fx-padding: 16px;
-
     -fx-background-color: #FFFFFF;
     -fx-border-width: 2px;
     -fx-border-color: rgba(204, 204, 204, 0.5);
@@ -17,20 +15,35 @@
 .button.login {
     -fx-pref-height: 48px;
     -fx-pref-width: 380px;
-
     -fx-display: flex;
     -fx-justify-content: center;
     -fx-align-items: center;
-
     -fx-background-color: #408BFF;
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 12pt;
     -fx-font-weight: bold;
-
     -fx-opacity: 0.7;
 }
 
 .button.login:hover {
+    -fx-opacity: 1;
+    -fx-cursor: hand;
+}
+
+.button.register {
+    -fx-pref-height: 48px;
+    -fx-pref-width: 180px;
+    -fx-display: flex;
+    -fx-justify-content: center;
+    -fx-align-items: center;
+    -fx-background-color: #408BFF;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 12pt;
+    -fx-font-weight: bold;
+    -fx-opacity: 0.7;
+}
+
+.button.register:hover {
     -fx-opacity: 1;
     -fx-cursor: hand;
 }

@@ -54,7 +54,7 @@ public class VBoxLoginFuncController implements Initializable {
     }
     
     @FXML
-    public void login() {
+    public void login() throws IOException {
         limparErros();
 
         String usuario = textFieldUsuario.getText();
@@ -66,6 +66,7 @@ public class VBoxLoginFuncController implements Initializable {
             if(funcionario != null) {
                 System.out.println("Sucesso");
                 //mudar para a tela principal
+                switchToRegister();
             }
             else {
                 labelNotFound.setText("Usuário não encontrado");
@@ -83,6 +84,10 @@ public class VBoxLoginFuncController implements Initializable {
 
     public void switchToLoginAdm() throws IOException {
         Main.setRoot("view/VBoxLoginAdm");
+    }
+
+    public void switchToRegister() throws IOException {
+        Main.setRoot("view/AnchorPaneCadastrarFunc");
     }
 
     public void limparErros() {
