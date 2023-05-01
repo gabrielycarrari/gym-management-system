@@ -3,17 +3,6 @@ package src.javafxmvc.model.domain;
 import java.io.Serializable;
 
 public class Funcionario implements Serializable {
-    /*
-     * CREATE TABLE funcionario (
-     *    idFuncionario SERIAL PRIMARY KEY,
-     *    nome VARCHAR(50) NOT NULL,
-     *    cpf VARCHAR(14) UNIQUE NOT NULL,
-     *    endereco VARCHAR(100) NOT NULL,
-     *    tipo VARCHAR(20)NOT NULL,
-     *    usuario VARCHAR(20) UNIQUE NOT NULL,
-     *    senha VARCHAR(20) NOT NULL
-     * );
-     */
     private int idFuncionario;
     private String nome;
     private String cpf;
