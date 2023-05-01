@@ -55,13 +55,13 @@ public class VBoxLoginFuncController implements Initializable {
     
     @FXML
     public void login() throws IOException {
-        limparErros();
+        cleanErrors();
 
         String usuario = textFieldUsuario.getText();
         String senha = passwordFieldSenha.getText();
 
         if(!usuario.isEmpty() && !senha.isEmpty()) {
-            Funcionario funcionario = funcionarioDAO.buscar(usuario, senha);
+            Funcionario funcionario = funcionarioDAO.validate(usuario, senha);
 
             if(funcionario != null) {
                 System.out.println("Sucesso");
@@ -87,10 +87,10 @@ public class VBoxLoginFuncController implements Initializable {
     }
 
     public void switchToRegister() throws IOException {
-        Main.setRoot("view/AnchorPaneCadastrarFunc");
+        Main.setRoot("view/AnchorPanePagamento");
     }
 
-    public void limparErros() {
+    public void cleanErrors() {
         labelErroUsuario.setText(null);
         labelErroSenha.setText(null);
         labelNotFound.setText(null);
