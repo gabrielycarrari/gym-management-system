@@ -3,14 +3,13 @@ package src.javafxmvc.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -19,13 +18,12 @@ import javafx.scene.control.TextField;
 
 import java.sql.Connection;
 
-import src.javafxmvc.Main;
 import src.javafxmvc.model.dao.FuncionarioDAO;
 import src.javafxmvc.model.domain.Funcionario;
 import src.javafxmvc.model.database.Database;
 import src.javafxmvc.model.database.DatabaseFactory;
 
-public class AnchorPaneCadastrarFuncController implements Initializable {
+public class AnchorPaneCadastroFuncController implements Initializable {
 
     @FXML
     private TextField textFieldNome;
@@ -54,28 +52,21 @@ public class AnchorPaneCadastrarFuncController implements Initializable {
     //labels de erro
     @FXML
     private Label labelErroNome;
-
     @FXML
     private Label labelErroCPF;
-
     @FXML
     private Label labelErroEndereco;
-
     @FXML
     private Label labelErroUsuario;   
-
     @FXML
     private Label labelErroTipo;
-
     @FXML
     private Label labelErroSenha;
-
     @FXML
     private Label labelErroSenhaConfirmada;
 
     private List<String> listTipos = new ArrayList<>();
     private ObservableList<String> observableListTipos;
-
 
     //Atributos para manipulação de Banco de Dados
     private final Database database = DatabaseFactory.getDatabase("postgresql");
@@ -85,14 +76,14 @@ public class AnchorPaneCadastrarFuncController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         funcionarioDAO.setConnection(connection);
-        carregarTipos();
+        loadTypes();
     }
     
     @FXML
-    public void cadastrar() {
-        limparErros();
+    public void register() {
+        cleanErrors();
 
-        if (validarDados()){
+        if (validateData()){
             Funcionario funcionario = new Funcionario();
             funcionario.setNome(textFieldNome.getText());
             funcionario.setCpf(textFieldCPF.getText());
@@ -101,28 +92,20 @@ public class AnchorPaneCadastrarFuncController implements Initializable {
             funcionario.setUsuario(textFieldUsuario.getText());
             funcionario.setSenha(passwordFieldSenhaConfirmada.getText());
             
-            funcionarioDAO.inserir(funcionario);
+            funcionarioDAO.insert(funcionario);
 
         }
     }
 
-    public void switchToLoginAdm() throws IOException {
-        Main.setRoot("view/VBoxLoginAdm");
-    }
-
-    public void switchToRegister() throws IOException {
-        Main.setRoot("view/AnchorPaneCadastrarFunc");
-    }
-
-    public void carregarTipos(){
-        listTipos.add("Personal Treiner");
+    public void loadTypes(){
+        listTipos.add("Personal Trainer");
         listTipos.add("Recepcionista");
 
         observableListTipos = FXCollections.observableArrayList(listTipos);
         comboBoxTipos.setItems(observableListTipos);
     }
 
-    public void limparErros() {
+    public void cleanErrors() {
         labelErroNome.setText(null);
         labelErroCPF.setText(null);
         labelErroEndereco.setText(null);
@@ -132,7 +115,7 @@ public class AnchorPaneCadastrarFuncController implements Initializable {
         labelErroSenhaConfirmada.setText(null);
     }
 
-    public boolean validarDados(){
+    public boolean validateData(){
         int qdtErros = 0;
         if(textFieldNome.getText() == null || textFieldNome.getText().length() == 0) {
             labelErroNome.setText("O campo Nome não pode estar vazio");
@@ -151,7 +134,7 @@ public class AnchorPaneCadastrarFuncController implements Initializable {
             qdtErros++;
         }else{
             //verificar se o nome do usuário já existe
-            Funcionario funcionario = funcionarioDAO.buscarNomeUsuario(textFieldUsuario.getText());
+            Funcionario funcionario = funcionarioDAO.validateUserName(textFieldUsuario.getText());
             if(funcionario != null){
                 labelErroUsuario.setText("Este nome de usuário já foi usado. Tente outro");
                 qdtErros++;
