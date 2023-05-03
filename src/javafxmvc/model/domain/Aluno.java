@@ -80,7 +80,6 @@ public class Aluno {
 
     @Override
     public String toString() {
-        return "Aluno [idAluno=" + idAluno + ", nome=" + nome + ", cpf=" + cpf + ", endereco=" + endereco + ", genero="
-                + genero + ", pontos=" + pontos + ", plano_id=" + plano_id + "]";
+        return this.nome;
     }
 }
