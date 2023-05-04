@@ -31,7 +31,11 @@
             <Label fx:id="labelDesconto" layoutY="87.0" styleClass="error" stylesheets="@../style.css" />
          </children>
       </Group>
-      <Button fx:id="buttonRegistrar" layoutX="543.0" layoutY="582.0" mnemonicParsing="false" onAction="#handleButtonRegister" styleClass="register" text="Registrar" />
-      <Button fx:id="buttonCancelar" layoutX="392.0" layoutY="582.0" mnemonicParsing="false" onAction="#handleButtonCancel" styleClass="cancel" text="Cancelar" />
+      <Group layoutX="392.0" layoutY="582.0">
+         <children>
+            <Button fx:id="buttonRegistrar" layoutX="151.0" mnemonicParsing="false" onAction="#handleButtonRegister" styleClass="register" text="Registrar" />
+            <Button fx:id="buttonCancelar" mnemonicParsing="false" onAction="#handleButtonCancel" styleClass="cancel" text="Cancelar" />
+         </children>
+      </Group>
    </children>
 </AnchorPane>

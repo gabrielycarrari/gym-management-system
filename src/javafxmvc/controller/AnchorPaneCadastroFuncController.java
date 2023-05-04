@@ -79,7 +79,7 @@ public class AnchorPaneCadastroFuncController implements Initializable {
     }
     
     @FXML
-    public void register() {
+    public void handleButtonRegister() {
         cleanErrors();
 
         if (validateData()){
@@ -94,6 +94,11 @@ public class AnchorPaneCadastroFuncController implements Initializable {
             funcionarioDAO.insert(funcionario);
 
         }
+    }
+
+    @FXML
+    public void handleButtonCancel(){
+        //getDialogStage().close();
     }
 
     public void loadTypes(){
