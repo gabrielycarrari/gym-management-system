@@ -32,7 +32,7 @@
 
 .button.register {
     -fx-pref-height: 48px;
-    -fx-pref-width: 180px;
+    -fx-pref-width: 150px;
     -fx-display: flex;
     -fx-justify-content: center;
     -fx-align-items: center;
@@ -44,6 +44,26 @@
 }
 
 .button.register:hover {
+    -fx-opacity: 1;
+    -fx-cursor: hand;
+}
+
+.button.cancel {
+    -fx-pref-height: 48px;
+    -fx-pref-width: 120px;
+    -fx-display: flex;
+    -fx-justify-content: center;
+    -fx-align-items: center;
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #408BFF;
+    -fx-border-width: 1px;
+    -fx-border-color: #408BFF;
+    -fx-font-size: 12pt;
+    -fx-font-weight: bold;
+    -fx-opacity: 0.7;
+}
+
+.button.cancel:hover {
     -fx-opacity: 1;
     -fx-cursor: hand;
 }

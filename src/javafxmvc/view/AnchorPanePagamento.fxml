@@ -20,7 +20,7 @@
       <Group layoutX="313.0" layoutY="282.0">
          <children>
             <Label text="Data" />
-            <DatePicker fx:id="datePicker" editable="false" layoutY="28.0"/>
+            <DatePicker fx:id="datePicker" editable="false" layoutY="28.0" />
             <Label fx:id="labelErroData" layoutX="1.0" layoutY="87.0" styleClass="error" stylesheets="@../style.css" />
          </children>
       </Group>
@@ -31,6 +31,7 @@
             <Label fx:id="labelDesconto" layoutY="87.0" styleClass="error" stylesheets="@../style.css" />
          </children>
       </Group>
-      <Button fx:id="buttonRegistrar" layoutX="411.0" layoutY="582.0" mnemonicParsing="false" onAction="#register" styleClass="register" text="Registrar" />
+      <Button fx:id="buttonRegistrar" layoutX="543.0" layoutY="582.0" mnemonicParsing="false" onAction="#handleButtonRegister" styleClass="register" text="Registrar" />
+      <Button fx:id="buttonCancelar" layoutX="392.0" layoutY="582.0" mnemonicParsing="false" onAction="#handleButtonCancel" styleClass="cancel" text="Cancelar" />
    </children>
 </AnchorPane>

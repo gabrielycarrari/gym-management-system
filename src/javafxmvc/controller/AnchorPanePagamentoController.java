@@ -1,6 +1,5 @@
 package src.javafxmvc.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,7 @@ import src.javafxmvc.model.database.DatabaseFactory;
 
 public class AnchorPanePagamentoController implements Initializable {
     @FXML
-    private ComboBox<Aluno> comboBoxAlunos; //Mudar para aluno depois
+    private ComboBox<Aluno> comboBoxAlunos;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -65,13 +64,12 @@ public class AnchorPanePagamentoController implements Initializable {
     }
     
     @FXML
-    public void register() {
+    public void handleButtonRegister() {
         cleanErrors();
 
         //talvez fazer aquela parada de rollback
 
         if (validateData()){
-            //formato 2023-04-13
             String dataFormatada = datePicker.getValue().format(formato);
             Pagamento pagamento = new Pagamento();
             Aluno aluno = comboBoxAlunos.getSelectionModel().getSelectedItem();
@@ -82,7 +80,6 @@ public class AnchorPanePagamentoController implements Initializable {
                 alunoDAO.update(aluno);
             }
 
-            //pagamento.setAluno_id(Integer.valueOf(comboBoxAlunos.getValue()));
             pagamento.setAluno_id(aluno.getIdAluno());
             pagamento.setData(LocalDate.parse(dataFormatada, formato));
             pagamento.setValor(Float.parseFloat(labelValor.getText()));            
@@ -90,6 +87,10 @@ public class AnchorPanePagamentoController implements Initializable {
             pagamentoDAO.insert(pagamento);
 
         }
+    }
+
+    public void handleButtonCancel(){
+        //getDialogStage().close();
     }
 
     public void loadAlunos(){
