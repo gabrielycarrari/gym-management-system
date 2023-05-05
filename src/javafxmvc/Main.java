@@ -13,7 +13,8 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("view/VBoxLoginAdm.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("view/VBoxLoginAdm.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("view/AnchorPaneCheckOut.fxml"));
         
         scene = new Scene(root);
         
