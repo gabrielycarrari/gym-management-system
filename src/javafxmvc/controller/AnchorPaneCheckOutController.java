@@ -20,6 +20,8 @@ import java.time.format.DateTimeFormatter;
 
 import src.javafxmvc.model.domain.Aluno;
 import src.javafxmvc.model.dao.AlunoDAO;
+//import src.javafxmvc.model.domain.CheckIn;
+//import src.javafxmvc.model.dao.CheckInDAO;
 import src.javafxmvc.model.domain.CheckOut;
 import src.javafxmvc.model.dao.CheckOutDAO;
 import src.javafxmvc.model.database.Database;
@@ -40,6 +42,8 @@ public class AnchorPaneCheckOutController implements Initializable {
     private Label labelErroAluno;
     @FXML
     private Label labelErroData;
+    @FXML
+    private Label labelErroHora;
 
     private List<Aluno> listAlunos = new ArrayList<>(); //Mudar para aluno depois
     private ObservableList<Aluno> observableListAlunos;
@@ -64,8 +68,6 @@ public class AnchorPaneCheckOutController implements Initializable {
     public void handleButtonSave() {
         cleanErrors();
 
-        //talvez fazer aquela parada de rollback
-
         if (validateData()){
             String dataFormatada = datePicker.getValue().format(formato);
             CheckOut checkOut = new CheckOut();
@@ -81,10 +83,6 @@ public class AnchorPaneCheckOutController implements Initializable {
         }
     }
 
-    public void handleButtonCancel(){
-        //getDialogStage().close();
-    }
-
     public void loadAlunos(){
         listAlunos = alunoDAO.list();
         observableListAlunos = FXCollections.observableArrayList(listAlunos);
@@ -98,9 +96,11 @@ public class AnchorPaneCheckOutController implements Initializable {
 
     public boolean validateData(){
         int qdtErros = 0;
+        String dataFormatada = datePicker.getValue().format(formato);
+        
 
         if (comboBoxAlunos.getSelectionModel().getSelectedItem() == null) {
-            labelErroAluno.setText("Selecione um aluno");
+            labelErroAluno.setText("Selecione um aluno.");
             qdtErros++;
         }
         if (datePicker.getValue() == null) {
@@ -109,15 +109,35 @@ public class AnchorPaneCheckOutController implements Initializable {
         } else if (datePicker.getValue().isAfter(LocalDate.now())) {
             labelErroData.setText("A data de checkOut não pode ser futura.");
             qdtErros++;
-        }//verificar se existe um check in neste dia
+        }/*else {
+            CheckIn checkInAnterior = checkInDAO.search(idAluno, LocalDate.parse(dataFormatada, formato));
+            if(checkInAnterior == null){
+                labelErroData.setText("Não foi realizado nenhum check in nesta data.");
+            }else{
+                //verificar hora 
+                //verificar formato da hora
+            }            
+        }*/
 
-        //verificar hora 
-        //verificar formato da hora
+        if (textFieldHora.getText() == null) {
+            labelErroHora.setText("O campo hora não pode estar vazio.");
+        }/*else if {
+            // verifica se o formato esta correto
+        }else {
+            //verifica se a hora é maior
+        }*/
+
+        
         if(qdtErros > 0){
             return false;
         }else{
             return true;
         }
+    }
+
+    @FXML
+    public void handleButtonCancel(){
+        //getDialogStage().close();
     }
 
     /*
