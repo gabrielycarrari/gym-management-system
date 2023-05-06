@@ -8,7 +8,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -16,12 +17,14 @@ import javafx.scene.control.TextField;
 
 import java.sql.Connection;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import src.javafxmvc.model.domain.Aluno;
 import src.javafxmvc.model.dao.AlunoDAO;
-//import src.javafxmvc.model.domain.CheckIn;
-//import src.javafxmvc.model.dao.CheckInDAO;
+import src.javafxmvc.model.domain.CheckIn;
+import src.javafxmvc.model.dao.CheckInDAO;
 import src.javafxmvc.model.domain.CheckOut;
 import src.javafxmvc.model.dao.CheckOutDAO;
 import src.javafxmvc.model.database.Database;
@@ -45,41 +48,39 @@ public class AnchorPaneCheckOutController implements Initializable {
     @FXML
     private Label labelErroHora;
 
-    private List<Aluno> listAlunos = new ArrayList<>(); //Mudar para aluno depois
+    private List<Aluno> listAlunos = new ArrayList<>(); 
     private ObservableList<Aluno> observableListAlunos;
-    private DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     //Atributos para manipulação de Banco de Dados
     private final Database database = DatabaseFactory.getDatabase("postgresql");
     private final Connection connection = database.conectar();
     private final CheckOutDAO checkOutDAO = new CheckOutDAO();
-
-    private AlunoDAO alunoDAO = new AlunoDAO();
+    private final CheckInDAO checkInDAO = new CheckInDAO();
+    private final AlunoDAO alunoDAO = new AlunoDAO();
    
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         checkOutDAO.setConnection(connection);
         alunoDAO.setConnection(connection);
+        checkInDAO.setConnection(connection);
 
+        datePicker.valueProperty().addListener((observable, oldValue, newValue) -> { loadTime();});
         loadAlunos();
     }
     
     @FXML
     public void handleButtonSave() {
         cleanErrors();
-
-        if (validateData()){
-            String dataFormatada = datePicker.getValue().format(formato);
+        int idCheckIn = validateData();
+        if ( idCheckIn != 0){
             CheckOut checkOut = new CheckOut();
-            Aluno aluno = comboBoxAlunos.getSelectionModel().getSelectedItem();
-
-            /*
-            checkOut.setAluno_id(aluno.getIdAluno());
-            checkOut.setData(LocalDate.parse(dataFormatada, formato));
-            checkOut.setValor(Float.parseFloat(labelValor.getText()));            
-            
+            checkOut.setData(datePicker.getValue());
+            checkOut.setHora(LocalTime.parse(textFieldHora.getText(), formatoHora));      
+            checkOut.setCheckIn_id(idCheckIn);
             checkOutDAO.insert(checkOut);
-            */
+            
+            showConfirmationAlert();
         }
     }
 
@@ -89,49 +90,85 @@ public class AnchorPaneCheckOutController implements Initializable {
         comboBoxAlunos.setItems(observableListAlunos);
     }
 
+    public void loadTime(){
+        String horaFormatada = LocalTime.now().format(formatoHora);
+        textFieldHora.setText(horaFormatada);
+    }
+
     public void cleanErrors() {
         labelErroAluno.setText(null);
         labelErroData.setText(null);
+        labelErroHora.setText(null);
     }
 
-    public boolean validateData(){
-        int qdtErros = 0;
-        String dataFormatada = datePicker.getValue().format(formato);
+    /** 
+     * Retorna idCheckIn; caso todas as validações estejam corretas
+     * Retorna 0; caso contrário
+     */
+    public int validateData(){
+        Aluno alunoSelecionado = comboBoxAlunos.getSelectionModel().getSelectedItem();
+        int idCheckIn = 0;
         
-
-        if (comboBoxAlunos.getSelectionModel().getSelectedItem() == null) {
+        //verifica se selecionou um aluno
+        if (alunoSelecionado == null) { 
             labelErroAluno.setText("Selecione um aluno.");
-            qdtErros++;
+            return idCheckIn;
         }
+
+        //verifica se a data está vazia
         if (datePicker.getValue() == null) {
             labelErroData.setText("Selecione uma data de checkOut válida.");
-            qdtErros++;
-        } else if (datePicker.getValue().isAfter(LocalDate.now())) {
-            labelErroData.setText("A data de checkOut não pode ser futura.");
-            qdtErros++;
-        }/*else {
-            CheckIn checkInAnterior = checkInDAO.search(idAluno, LocalDate.parse(dataFormatada, formato));
-            if(checkInAnterior == null){
-                labelErroData.setText("Não foi realizado nenhum check in nesta data.");
-            }else{
-                //verificar hora 
-                //verificar formato da hora
-            }            
-        }*/
+            return idCheckIn;
+        } 
 
+        //verifica se é uma data futura
+        if (datePicker.getValue().isAfter(LocalDate.now())) {
+            labelErroData.setText("A data de checkOut não pode ser futura.");
+            return idCheckIn;
+        }
+        
+        CheckIn checkInAnterior = checkInDAO.search(alunoSelecionado.getIdAluno(), datePicker.getValue());
+    
+        //verifica se existe um check in realizado por aquele aluno naquela data
+        if(checkInAnterior.getIdCheckIn() == 0){
+            labelErroData.setText("Não foi realizado nenhum check in por este aluno nesta data.");
+            return idCheckIn;
+        }
+
+        //verifica se já existe um check out realizado por aquele aluno naquela data
+        if (checkOutDAO.search(checkInAnterior.getIdCheckIn())){
+            labelErroData.setText("Já existe um check out realizado por este aluno nesta data.");
+            return idCheckIn;
+        }
+
+        //verifica se a hora está vazia
         if (textFieldHora.getText() == null) {
             labelErroHora.setText("O campo hora não pode estar vazio.");
-        }/*else if {
-            // verifica se o formato esta correto
-        }else {
-            //verifica se a hora é maior
-        }*/
+            return idCheckIn;
+        }
 
-        
-        if(qdtErros > 0){
-            return false;
+        //verifica se a hora está no formato correto
+        if (!validateTime(textFieldHora.getText())){
+            labelErroHora.setText("Hora inválida! A hora deve estar no formato HH:mm:ss (por exemplo, 09:30:00)");
+            return idCheckIn;
+        }
+
+        //verifica se a hora do check out é maior que a hora do check in
+        if (checkInAnterior.getHora().compareTo(LocalTime.parse(textFieldHora.getText(), formatoHora)) < 0) {
+            idCheckIn = checkInAnterior.getIdCheckIn(); 
+            return idCheckIn; 
         }else{
-            return true;
+            labelErroHora.setText("A hora do check out deve ser superior a hora do check in");
+            return idCheckIn;
+        }
+    }
+
+    public boolean validateTime (String hora) {
+        try {
+            LocalTime horaLocal = LocalTime.parse(hora, formatoHora);
+            return horaLocal != null;
+        } catch (DateTimeParseException e) {
+            return false;
         }
     }
 
@@ -140,23 +177,17 @@ public class AnchorPaneCheckOutController implements Initializable {
         //getDialogStage().close();
     }
 
-    /*
-    @FXML
-    public void handleComboBoxAlunos() {
-        Aluno alunoSelecionado = comboBoxAlunos.getSelectionModel().getSelectedItem();
+    public void showConfirmationAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Check-Out Registrado");
+        alert.setHeaderText(null);
+        alert.setContentText("Seu check-out foi registrado com sucesso!!");
 
-        if (alunoSelecionado != null) {
-            if(alunoSelecionado.getPontos() >= 150) {
-                float preco = planoDAO.getPrice(alunoSelecionado.getPlano_id());
-                preco *= 0.85;
-                labelValor.setText(String.valueOf(preco));
-                labelDesconto.setText("Desconto aplicado");
-                labelDesconto.setStyle("-fx-text-fill: #3CB370;");
-            }else {
-                labelValor.setText(String.valueOf(planoDAO.getPrice(alunoSelecionado.getPlano_id())));
-                labelDesconto.setText("Não foi possível aplicar desconto, quantidade de pontos insuficiente (" + alunoSelecionado.getPontos() + ")");
-            }
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.OK) {
+            alert.close();
+            //getDialogStage().close();
         }
     }
-    */
 }
