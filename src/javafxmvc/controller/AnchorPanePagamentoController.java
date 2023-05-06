@@ -8,14 +8,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
 import java.sql.Connection;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import src.javafxmvc.model.domain.Aluno;
 import src.javafxmvc.model.dao.AlunoDAO;
@@ -41,9 +41,8 @@ public class AnchorPanePagamentoController implements Initializable {
     @FXML
     private Label labelErroData;
 
-    private List<Aluno> listAlunos = new ArrayList<>(); //Mudar para aluno depois
+    private List<Aluno> listAlunos = new ArrayList<>();
     private ObservableList<Aluno> observableListAlunos;
-    private DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     //Atributos para manipulação de Banco de Dados
     private final Database database = DatabaseFactory.getDatabase("postgresql");
@@ -67,10 +66,7 @@ public class AnchorPanePagamentoController implements Initializable {
     public void handleButtonRegister() {
         cleanErrors();
 
-        //talvez fazer aquela parada de rollback
-
         if (validateData()){
-            String dataFormatada = datePicker.getValue().format(formato);
             Pagamento pagamento = new Pagamento();
             Aluno aluno = comboBoxAlunos.getSelectionModel().getSelectedItem();
                       
@@ -81,10 +77,12 @@ public class AnchorPanePagamentoController implements Initializable {
             }
 
             pagamento.setAluno_id(aluno.getIdAluno());
-            pagamento.setData(LocalDate.parse(dataFormatada, formato));
+            pagamento.setData(datePicker.getValue());
             pagamento.setValor(Float.parseFloat(labelValor.getText()));            
             
             pagamentoDAO.insert(pagamento);
+
+            showConfirmationAlert();
 
         }
     }
@@ -141,6 +139,20 @@ public class AnchorPanePagamentoController implements Initializable {
                 labelValor.setText(String.valueOf(planoDAO.getPrice(alunoSelecionado.getPlano_id())));
                 labelDesconto.setText("Não foi possível aplicar desconto, quantidade de pontos insuficiente (" + alunoSelecionado.getPontos() + ")");
             }
+        }
+    }
+    
+    public void showConfirmationAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Check-Out Registrado");
+        alert.setHeaderText(null);
+        alert.setContentText("Seu check-out foi registrado com sucesso!!");
+
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.OK) {
+            alert.close();
+            //getDialogStage().close();
         }
     }
 }
