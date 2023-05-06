@@ -1,17 +1,18 @@
 package src.javafxmvc.model.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class CheckOut {
     private int idCheckOut;
-    private Date data;
-    private Date hora; //ver certinho como usa hora
+    private LocalDate data;
+    private LocalTime hora;
     private int checkIn_id;
     
     public CheckOut() {
     }
 
-    public CheckOut(int idCheckOut, Date data, Date hora, int checkIn_id) {
+    public CheckOut(int idCheckOut, LocalDate data, LocalTime hora, int checkIn_id) {
         this.idCheckOut = idCheckOut;
         this.data = data;
         this.hora = hora;
@@ -26,19 +27,19 @@ public class CheckOut {
         this.idCheckOut = idCheckOut;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 
-    public Date getHora() {
+    public LocalTime getHora() {
         return hora;
     }
 
-    public void setHora(Date hora) {
+    public void setHora(LocalTime hora) {
         this.hora = hora;
     }
 
