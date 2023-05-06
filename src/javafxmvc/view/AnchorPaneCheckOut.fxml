@@ -8,13 +8,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="720.0" prefWidth="980.0" styleClass="body" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.javafxmvc.controller.AnchorPanePagamentoController">
+<AnchorPane prefHeight="720.0" prefWidth="980.0" styleClass="body" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.javafxmvc.controller.AnchorPaneCheckOutController">
    <children>
       <Label layoutX="70.0" layoutY="50.0" styleClass="h1" stylesheets="@../style.css" text="Check Out" />
       <Group layoutX="313.0" layoutY="150.0">
          <children>
             <Label text="Aluno" />
-            <ComboBox fx:id="comboBoxAlunos" layoutY="28.0" onAction="#handleComboBoxAlunos" prefWidth="150.0" styleClass="input" />
+            <ComboBox fx:id="comboBoxAlunos" layoutY="28.0" prefWidth="150.0" styleClass="input" />
             <Label fx:id="labelErroAluno" layoutX="1.0" layoutY="87.0" styleClass="error" stylesheets="@../style.css" />
          </children>
       </Group>
