@@ -1,5 +1,7 @@
 package src.javafxmvc.controller;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -10,12 +12,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.sql.Connection;
 
 import src.javafxmvc.Main;
+import src.javafxmvc.model.dao.FuncionarioDAO;
 import src.javafxmvc.model.database.Database;
 import src.javafxmvc.model.database.DatabaseFactory;
+import src.javafxmvc.model.domain.Funcionario;
 
 public class VBoxLoginFuncController implements Initializable {
 
@@ -40,26 +46,43 @@ public class VBoxLoginFuncController implements Initializable {
     @FXML
     private Label labelNotFound;
 
+    @FXML 
+    private ImageView imageViewLogo;
+
 
     //Atributos para manipulação de Banco de Dados
     private final Database database = DatabaseFactory.getDatabase("postgresql");
     private final Connection connection = database.conectar();
-    // Create DAO
+    private final FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // Set DAO connection
+        funcionarioDAO.setConnection(connection);
+
+        try {
+            Image image = new Image(new FileInputStream("src/javafxmvc/images/logo-black.png"));
+            imageViewLogo.setImage(image);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     
     @FXML
-    public void login() {
-        limparErros();
+    public void login() throws IOException {
+        cleanErrors();
 
         String usuario = textFieldUsuario.getText();
         String senha = passwordFieldSenha.getText();
 
         if(!usuario.isEmpty() && !senha.isEmpty()) {
-            labelNotFound.setText("Usuário não encontrado");
+            Funcionario funcionario = funcionarioDAO.validate(usuario, senha);
+            
+            if(funcionario != null) {
+                switchToMainFunc();
+            }
+            else {
+                labelNotFound.setText("Usuário não encontrado");
+            }
         }
         else {
             if(usuario.isEmpty()) {
@@ -75,7 +98,11 @@ public class VBoxLoginFuncController implements Initializable {
         Main.setRoot("view/VBoxLoginAdm");
     }
 
-    public void limparErros() {
+    public void switchToMainFunc() throws IOException {
+        Main.setRoot("view/AnchorPaneMainFunc");
+    }
+
+    public void cleanErrors() {
         labelErroUsuario.setText(null);
         labelErroSenha.setText(null);
         labelNotFound.setText(null);
