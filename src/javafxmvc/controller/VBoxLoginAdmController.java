@@ -67,17 +67,17 @@ public class VBoxLoginAdmController implements Initializable {
     }
     
     @FXML
-    public void login() {
-        limparErros();
+    public void login() throws IOException {
+        cleanErrors();
 
         String usuario = textFieldUsuario.getText();
         String senha = passwordFieldSenha.getText();
 
         if(!usuario.isEmpty() && !senha.isEmpty()) {
-            Admin admin = adminDAO.buscar(usuario, senha);
+            Admin admin = adminDAO.validate(usuario, senha);
 
             if(admin != null) {
-                System.out.println("Sucesso");
+                switchToMainAdm();
             }
             else {
                 labelNotFound.setText("Usuário não encontrado");
@@ -97,7 +97,11 @@ public class VBoxLoginAdmController implements Initializable {
         Main.setRoot("view/VBoxLoginFunc");
     }
 
-    public void limparErros() {
+    public void switchToMainAdm() throws IOException {
+        Main.setRoot("view/AnchorPaneMainAdm");
+    }
+
+    public void cleanErrors() {
         labelErroUsuario.setText(null);
         labelErroSenha.setText(null);
         labelNotFound.setText(null);

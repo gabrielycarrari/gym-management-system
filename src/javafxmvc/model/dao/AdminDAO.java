@@ -20,7 +20,7 @@ public class AdminDAO {
         this.connection = connection;
     }
 
-    public Admin buscar(String usuario, String senha) {
+    public Admin validate(String usuario, String senha) {
         String sql = "SELECT * FROM admin WHERE usuario=? AND senha=?";
         Admin retorno = null;
 

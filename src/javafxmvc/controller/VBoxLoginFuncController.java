@@ -18,8 +18,10 @@ import javafx.scene.image.ImageView;
 import java.sql.Connection;
 
 import src.javafxmvc.Main;
+import src.javafxmvc.model.dao.FuncionarioDAO;
 import src.javafxmvc.model.database.Database;
 import src.javafxmvc.model.database.DatabaseFactory;
+import src.javafxmvc.model.domain.Funcionario;
 
 public class VBoxLoginFuncController implements Initializable {
 
@@ -51,11 +53,11 @@ public class VBoxLoginFuncController implements Initializable {
     //Atributos para manipulação de Banco de Dados
     private final Database database = DatabaseFactory.getDatabase("postgresql");
     private final Connection connection = database.conectar();
-    // Create DAO
+    private final FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // Set DAO connection
+        funcionarioDAO.setConnection(connection);
 
         try {
             Image image = new Image(new FileInputStream("src/javafxmvc/images/logo-black.png"));
@@ -67,15 +69,20 @@ public class VBoxLoginFuncController implements Initializable {
     
     @FXML
     public void login() throws IOException {
-        limparErros();
+        cleanErrors();
 
         String usuario = textFieldUsuario.getText();
         String senha = passwordFieldSenha.getText();
 
         if(!usuario.isEmpty() && !senha.isEmpty()) {
-            switchToMainFunc();
-            // Implementar buscar() funcionário
-            // labelNotFound.setText("Usuário não encontrado");
+            Funcionario funcionario = funcionarioDAO.validate(usuario, senha);
+            
+            if(funcionario != null) {
+                switchToMainFunc();
+            }
+            else {
+                labelNotFound.setText("Usuário não encontrado");
+            }
         }
         else {
             if(usuario.isEmpty()) {
@@ -95,7 +102,7 @@ public class VBoxLoginFuncController implements Initializable {
         Main.setRoot("view/AnchorPaneMainFunc");
     }
 
-    public void limparErros() {
+    public void cleanErrors() {
         labelErroUsuario.setText(null);
         labelErroSenha.setText(null);
         labelNotFound.setText(null);

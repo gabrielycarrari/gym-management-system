@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="980.0" styleClass="body" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.javafxmvc.controller.AnchorPaneAlunoController">
+   <children>
+      <Label layoutX="70.0" layoutY="50.0" styleClass="h1" text="Alunos" />
+      <AnchorPane layoutX="14.0" layoutY="130.0" prefHeight="540.0" prefWidth="840.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="130.0">
+         <children>
+            <TableView fx:id="tableViewAlunos" prefHeight="200.0" prefWidth="840.0">
+              <columns>
+                <TableColumn fx:id="tableColumnAlunoNome" prefWidth="75.0" text="Nome" />
+                <TableColumn fx:id="tableColumnAlunoCpf" prefWidth="75.0" text="CPF" />
+                  <TableColumn fx:id="tableColumnAlunoEndereco" prefWidth="75.0" text="Endereço " />
+                  <TableColumn fx:id="tableColumnAlunoGenero" prefWidth="75.0" text="Genero" />
+                  <TableColumn fx:id="tableColumnAlunoPontos" prefWidth="75.0" text="Pontos " />
+                  <TableColumn fx:id="tableColumnAlunoPlano" prefWidth="75.0" text="Plano" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

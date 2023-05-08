@@ -16,10 +16,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import src.javafxmvc.Main;
 
-public class AnchorPaneMainFuncController implements Initializable {
-
+public class AnchorPaneMainAdmController implements Initializable {
+ 
     @FXML
     private Button buttonDashboard;
+
+    @FXML
+    private Button buttonFuncionarios;
 
     @FXML
     private Button buttonAlunos;
@@ -51,8 +54,8 @@ public class AnchorPaneMainFuncController implements Initializable {
         }
     }
 
-    public void switchToLoginFunc() throws IOException {
-        Main.setRoot("view/VBoxLoginFunc");
+    public void switchToLoginAdm() throws IOException {
+        Main.setRoot("view/VBoxLoginAdm");
     }
 
     public void loadImages() {
@@ -64,6 +67,7 @@ public class AnchorPaneMainFuncController implements Initializable {
         }
 
         setImageToButton(buttonDashboard, "icon-dashboard.png");
+        setImageToButton(buttonFuncionarios, "icon-alunos.png");
         setImageToButton(buttonAlunos, "icon-alunos.png");
         setImageToButton(buttonTreinos, "icon-treinos.png");
         setImageToButton(buttonPagamentos, "icon-pagamentos.png");
@@ -95,6 +99,11 @@ public class AnchorPaneMainFuncController implements Initializable {
 
     public void switchAnchorPaneDashboard() throws IOException {
         AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("../view/AnchorPaneDashboard.fxml"));
+        anchorPane.getChildren().setAll(a);
+    }
+
+    public void switchAnchorPaneFuncionarios() throws IOException {
+        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("../view/AnchorPaneFunc.fxml"));
         anchorPane.getChildren().setAll(a);
     }
 
