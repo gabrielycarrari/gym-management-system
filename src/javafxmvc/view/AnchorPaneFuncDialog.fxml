@@ -8,9 +8,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="720.0" prefWidth="980.0" styleClass="body" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.javafxmvc.controller.AnchorPaneCadastroFuncController">
+<AnchorPane prefHeight="720.0" prefWidth="980.0" styleClass="body" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.javafxmvc.controller.AnchorPaneFuncDialogController">
    <children>
-      <Label layoutX="70.0" layoutY="50.0" styleClass="h1" stylesheets="@../style.css" text="Cadastro Funcionário" />
+      <Label fx:id="labelTitulo" layoutX="70.0" layoutY="50.0" styleClass="h1" stylesheets="@../style.css" />
       <Group layoutX="70.0" layoutY="141.0">
          <children>
             <Label text="Nome Completo" />
@@ -63,7 +63,7 @@
       <Group layoutX="597.0" layoutY="618.0">
          <children>
             <Button fx:id="buttonCancel" mnemonicParsing="false" onAction="#handleButtonCancel" styleClass="cancel" text="Cancelar" />
-            <Button fx:id="buttonCadastrar" layoutX="143.0" mnemonicParsing="false" onAction="#handleButtonRegister" styleClass="register" text="Cadastrar" />
+            <Button fx:id="buttonConfirmar" layoutX="143.0" mnemonicParsing="false" onAction="#handleButtonConfirm" styleClass="register" text="Confirmar" />
          </children>
       </Group>
    </children>
