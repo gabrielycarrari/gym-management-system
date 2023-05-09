@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="body" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.javafxmvc.controller.AnchorPaneMainFuncController">
+   <children>
+      <VBox layoutY="-2.0" prefHeight="720.0" prefWidth="300.0" styleClass="sidebar">
+         <children>
+            <AnchorPane prefHeight="520.0" prefWidth="260.0" styleClass="container">
+               <children>
+                  <ImageView fx:id="imageViewLogo" fitHeight="25.0" fitWidth="150.0" layoutX="30.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="buttonDashboard" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="30.0" layoutY="130.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchAnchorPaneDashboard" styleClass="item" text="Dashboard">
+                  </Button>
+                  <Button fx:id="buttonAlunos" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="30.0" layoutY="188.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchAnchorPaneAluno" styleClass="item" text="Alunos">
+                  </Button>
+                  <Button fx:id="buttonTreinos" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="30.0" layoutY="246.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchAnchorPaneTreino" styleClass="item" text="Treinos">
+                  </Button>
+                  <Button fx:id="buttonPagamentos" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="30.0" layoutY="304.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchAnchorPanePagamento" styleClass="item" text="Pagamentos">
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="container">
+               <children>
+                  <Separator layoutX="30.0" prefWidth="200.0" />
+                  <Button fx:id="buttonLogOut" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="30.0" layoutY="61.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchToLoginFunc" styleClass="item" text="Log Out" AnchorPane.leftAnchor="0.0">
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <AnchorPane fx:id="anchorPane" layoutX="292.0" layoutY="250.0" prefHeight="720.0" prefWidth="980.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+   </children>
+</AnchorPane>

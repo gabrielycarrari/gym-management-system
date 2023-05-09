@@ -1,3 +1,11 @@
+.body {
+    -fx-font-family: 'Roboto', sans-serif;
+    -fx-background-color: #FFFFFF;  
+}
+
+
+/* */
+
 .input {
     -fx-pref-width: 380px;
     -fx-padding: 16px;
@@ -117,4 +125,37 @@
 .date-picker .day-cell {
     -fx-font-size: 14pt;
     -fx-text-fill: #333333;
+}
+
+/* */
+
+.split-pane > .split-pane-divider {
+    -fx-background-color: #C8CACF;
+    -fx-border-color: #C8CACF;
+    -fx-border-width: 0.001px;
+}
+
+/* */
+.sidebar {
+    -fx-background-color: #F9F9F9;
+}
+
+.sidebar .container {
+    -fx-padding: 0 30px;
+}
+
+
+.sidebar .item {
+    -fx-pref-height: 48px;
+    -fx-pref-width: 200px;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-weight: bold;
+    -fx-text-fill: #707784;
+}
+
+.sidebar .item:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #25334C;
+    -fx-text-fill: #FFFFFF;
 }

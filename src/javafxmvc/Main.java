@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -13,13 +14,13 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        //Parent root = FXMLLoader.load(getClass().getResource("view/VBoxLoginAdm.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("view/AnchorPaneCheckOut.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("view/VBoxLoginFunc.fxml"));
         
         scene = new Scene(root);
         
         stage.setScene(scene);
-        stage.setTitle("Sistema de Academia - Login");
+        stage.setTitle("Sistema de Academia");
+        stage.getIcons().add(new Image("src/javafxmvc/images/gym-icon.png"));
         stage.setHeight(720);
         stage.setWidth(1280);
         stage.setResizable(false);

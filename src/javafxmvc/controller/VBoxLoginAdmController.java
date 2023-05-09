@@ -1,5 +1,7 @@
 package src.javafxmvc.controller;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -10,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import src.javafxmvc.Main;
 import src.javafxmvc.model.dao.AdminDAO;
 import src.javafxmvc.model.domain.Admin;
@@ -41,6 +45,9 @@ public class VBoxLoginAdmController implements Initializable {
     @FXML
     private Label labelNotFound;
 
+    @FXML 
+    private ImageView imageViewLogo;
+
 
     //Atributos para manipulação de Banco de Dados
     private final Database database = DatabaseFactory.getDatabase("postgresql");
@@ -50,20 +57,27 @@ public class VBoxLoginAdmController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         adminDAO.setConnection(connection);
+
+        try {
+            Image image = new Image(new FileInputStream("src/javafxmvc/images/logo-black.png"));
+            imageViewLogo.setImage(image);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     
     @FXML
-    public void login() {
-        limparErros();
+    public void login() throws IOException {
+        cleanErrors();
 
         String usuario = textFieldUsuario.getText();
         String senha = passwordFieldSenha.getText();
 
         if(!usuario.isEmpty() && !senha.isEmpty()) {
-            Admin admin = adminDAO.buscar(usuario, senha);
+            Admin admin = adminDAO.validate(usuario, senha);
 
             if(admin != null) {
-                System.out.println("Sucesso");
+                switchToMainAdm();
             }
             else {
                 labelNotFound.setText("Usuário não encontrado");
@@ -83,7 +97,11 @@ public class VBoxLoginAdmController implements Initializable {
         Main.setRoot("view/VBoxLoginFunc");
     }
 
-    public void limparErros() {
+    public void switchToMainAdm() throws IOException {
+        Main.setRoot("view/AnchorPaneMainAdm");
+    }
+
+    public void cleanErrors() {
         labelErroUsuario.setText(null);
         labelErroSenha.setText(null);
         labelNotFound.setText(null);
