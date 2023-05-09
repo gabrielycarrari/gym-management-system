@@ -76,6 +76,11 @@
     -fx-cursor: hand;
 }
 
+.button.remove {
+    -fx-text-fill: #ff4040;
+    -fx-border-color: #ff4040;
+}
+
 .h1 {
     -fx-alignment: center;
     -fx-font-weight: 600;

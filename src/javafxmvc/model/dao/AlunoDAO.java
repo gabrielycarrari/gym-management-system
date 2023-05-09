@@ -92,5 +92,22 @@ public class AlunoDAO {
         }
         return retorno;
     }
-        
+
+    public Aluno findById(int idAluno) { 
+        String sql = "SELECT nome FROM Aluno WHERE idAluno=?";
+        Aluno retorno = new Aluno();
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, idAluno);
+            ResultSet resultado = stmt.executeQuery();
+            if (resultado.next()) {
+                retorno.setNome(resultado.getString("nome"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Aluno.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
+    }
+    
 }
