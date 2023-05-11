@@ -22,6 +22,8 @@
                   </Button>
                   <Button fx:id="buttonPagamentos" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="30.0" layoutY="362.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchAnchorPanePagamento" styleClass="item" text="Pagamentos">
                   </Button>
+                  <Button fx:id="buttonCheckIn" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="30.0" layoutY="420.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchAnchorPaneCheckIn" styleClass="item" text="CheckIn" />
+                  <Button fx:id="buttonCheckOut" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="30.0" layoutY="478.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#switchAnchorPaneCheckOut" styleClass="item" text="CheckOut" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="container">
