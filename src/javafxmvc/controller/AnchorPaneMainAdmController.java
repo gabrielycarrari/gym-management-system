@@ -121,4 +121,14 @@ public class AnchorPaneMainAdmController implements Initializable {
         AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("../view/AnchorPanePagamento.fxml"));
         anchorPane.getChildren().setAll(a);
     }
+
+    public void switchAnchorPaneCheckOut() throws IOException {
+        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("../view/AnchorPaneCheckOut.fxml"));
+        anchorPane.getChildren().setAll(a);
+    }
+
+    public void switchAnchorPaneCheckIn() throws IOException {
+        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("../view/AnchorPaneCheckIn.fxml"));
+        anchorPane.getChildren().setAll(a);
+    }
 }
