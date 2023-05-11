@@ -1,5 +1,4 @@
 package src.javafxmvc.model.dao;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,14 +8,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import src.javafxmvc.model.domain.Aluno;
-
 public class AlunoDAO {
     private Connection connection;
-
     public Connection getConnection() {
         return connection;
     }
-
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
@@ -92,5 +88,24 @@ public class AlunoDAO {
         }
         return retorno;
     }
-        
+
+    public Aluno findById(int idAluno) { 
+        String sql = "SELECT nome FROM Aluno WHERE idAluno=?";
+        String sql = "SELECT * FROM Aluno WHERE idAluno=?";
+        Aluno retorno = new Aluno();
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, idAluno);
+            ResultSet resultado = stmt.executeQuery();
+            if (resultado.next()) {
+                retorno.setIdAluno(resultado.getInt("idAluno"));
+                retorno.setNome(resultado.getString("nome"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Aluno.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
+    }
+    
 }
