@@ -31,7 +31,7 @@ public class CheckOutDAO {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setDate(1,  java.sql.Date.valueOf(checkOut.getData()));
             stmt.setTime(2,  java.sql.Time.valueOf(checkOut.getHora()));
-            stmt.setInt(3, checkOut.getCheckIn_id());
+            stmt.setInt(3, checkOut.getCheckin_id());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -46,7 +46,7 @@ public class CheckOutDAO {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setDate(1, java.sql.Date.valueOf(checkOut.getData()));
             stmt.setTime(2, java.sql.Time.valueOf(checkOut.getHora()));
-            stmt.setInt(3, checkOut.getCheckIn_id());
+            stmt.setInt(3, checkOut.getCheckin_id());
             stmt.setInt(4, checkOut.getIdCheckOut());
             stmt.execute();
             return true;
@@ -80,7 +80,7 @@ public class CheckOutDAO {
                 checkOut.setIdCheckOut(resultado.getInt("idCheckOut"));
                 checkOut.setData(resultado.getDate("data").toLocalDate());
                 checkOut.setHora(resultado.getTime("hora").toLocalTime());
-                checkOut.setCheckIn_id(resultado.getInt("checkIn_id"));
+                checkOut.setCheckin_id(resultado.getInt("checkIn_id"));
                 retorno.add(checkOut);
             }
         } catch (SQLException ex) {

@@ -185,10 +185,10 @@ public class AnchorPaneFuncDialogController implements Initializable {
             qdtErros++;
         }else{
             //verificar se o nome do usuário já existe
-            Funcionario funcionario = funcionarioDAO.validateUserName(textFieldUsuario.getText());
-            if(funcionario != null){
-                //Verificar se nao é uma alteração do mesmo funcionário, pois caso seja, o nome de usuário pode ser o mesmo
-                if(!labelTitulo.getText().equals("Alterar Funcionário") && !funcionario.getUsuario().equals(textFieldUsuario.getText())){
+            Funcionario funcionarioExiste = funcionarioDAO.validateUserName(textFieldUsuario.getText());
+            if(funcionarioExiste != null){
+                //Verificar se não é uma alteração do mesmo funcionário, pois caso seja, o nome de usuário pode ser o mesmo
+                if(!funcionario.getUsuario().equals(funcionarioExiste.getUsuario())){
                     labelErroUsuario.setText("Este nome de usuário já foi usado. Tente outro");
                     qdtErros++;
                 }

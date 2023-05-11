@@ -8,11 +8,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.time.LocalDate;
@@ -34,6 +33,8 @@ public class AnchorPanePagamentoDialogController implements Initializable {
     private Label labelValor;
     @FXML
     private Label labelDesconto;
+    @FXML
+    private Label labelTitulo;
 
     //labels de erro
     @FXML
@@ -43,6 +44,9 @@ public class AnchorPanePagamentoDialogController implements Initializable {
 
     private List<Aluno> listAlunos = new ArrayList<>();
     private ObservableList<Aluno> observableListAlunos;
+    private Stage dialogStage;
+    private boolean buttonConfirmed = false;
+    private Pagamento pagamento;
 
     //Atributos para manipulação de Banco de Dados
     private final Database database = DatabaseFactory.getDatabase("postgresql");
@@ -62,14 +66,49 @@ public class AnchorPanePagamentoDialogController implements Initializable {
         loadAlunos();
     }
     
+    public Stage getDialogStage() {
+        return dialogStage;
+    }
+
+    public void setDialogStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
+    }
+
+    public void setTitle(int button){
+        switch(button){
+            case 0:
+                this.labelTitulo.setText("Registrar Pagamento");
+                break;
+            case 1:
+                this.labelTitulo.setText("Alterar Pagamento");
+                break;
+        }
+        
+    }
+
+    public Pagamento getFuncionario() {
+        return this.pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
+        Aluno alunoComboBox = alunoDAO.findById(pagamento.getAluno_id());
+        comboBoxAlunos.getSelectionModel().select(alunoComboBox);
+        datePicker.setValue(pagamento.getData());
+        labelValor.setText(String.valueOf(pagamento.getValor()));
+    }
+
+    public boolean isButtonConfirmed() {
+        return buttonConfirmed;
+    }
+    
     @FXML
-    public void handleButtonRegister() {
+    public void handleButtonConfirm() {
         cleanErrors();
 
         if (validateData()){
-            Pagamento pagamento = new Pagamento();
             Aluno aluno = comboBoxAlunos.getSelectionModel().getSelectedItem();
-                      
+                                  
             //atualizando os pontos do aluno casa ele esteja apto ao desconto
             if(aluno.getPontos() >= 150){
                 aluno.setPontos(aluno.getPontos() - 150);
@@ -80,15 +119,13 @@ public class AnchorPanePagamentoDialogController implements Initializable {
             pagamento.setData(datePicker.getValue());
             pagamento.setValor(Float.parseFloat(labelValor.getText()));            
             
-            pagamentoDAO.insert(pagamento);
-
-            showConfirmationAlert();
-
+            buttonConfirmed = true;
+            dialogStage.close();
         }
     }
 
     public void handleButtonCancel(){
-        //getDialogStage().close();
+        getDialogStage().close();
     }
 
     public void loadAlunos(){
@@ -142,17 +179,5 @@ public class AnchorPanePagamentoDialogController implements Initializable {
         }
     }
     
-    public void showConfirmationAlert() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Check-Out Registrado");
-        alert.setHeaderText(null);
-        alert.setContentText("Seu check-out foi registrado com sucesso!!");
-
-        alert.showAndWait();
-
-        if (alert.getResult() == ButtonType.OK) {
-            alert.close();
-            //getDialogStage().close();
-        }
-    }
+    
 }

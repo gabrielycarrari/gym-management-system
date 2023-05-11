@@ -94,7 +94,7 @@ public class AlunoDAO {
     }
 
     public Aluno findById(int idAluno) { 
-        String sql = "SELECT nome FROM Aluno WHERE idAluno=?";
+        String sql = "SELECT * FROM Aluno WHERE idAluno=?";
         Aluno retorno = new Aluno();
 
         try {
@@ -102,6 +102,7 @@ public class AlunoDAO {
             stmt.setInt(1, idAluno);
             ResultSet resultado = stmt.executeQuery();
             if (resultado.next()) {
+                retorno.setIdAluno(resultado.getInt("idAluno"));
                 retorno.setNome(resultado.getString("nome"));
             }
         } catch (SQLException ex) {

@@ -69,8 +69,6 @@ public class AnchorPaneFuncController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         funcionarioDAO.setConnection(connection);
-        
-        listFuncionarios = funcionarioDAO.list();
 
         loadTableViewFuncionarios();
     }
@@ -82,6 +80,8 @@ public class AnchorPaneFuncController implements Initializable {
         tableColumnFuncTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         tableColumnFuncUsuario.setCellValueFactory(new PropertyValueFactory<>("usuario"));
         
+        listFuncionarios = funcionarioDAO.list();
+
         /* Populate TableView */
         observableListFuncionarios = FXCollections.observableArrayList(listFuncionarios);
         tableViewFuncionarios.setItems(observableListFuncionarios);
@@ -93,6 +93,7 @@ public class AnchorPaneFuncController implements Initializable {
         boolean buttonConfirmarClicked = showDialog(funcionario, 0);
         if (buttonConfirmarClicked) {
             funcionarioDAO.insert(funcionario);
+            showConfirmationAlert(0);
             loadTableViewFuncionarios();
         }
     }
@@ -104,17 +105,21 @@ public class AnchorPaneFuncController implements Initializable {
             boolean buttonConfirmarClicked = showDialog(funcionario, 1);
             if (buttonConfirmarClicked) {
                 funcionarioDAO.update(funcionario);
+                showConfirmationAlert(1);
                 loadTableViewFuncionarios();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Por favor, escolha um funcionario na Tabela!");
+            alert.setContentText("Por favor, escolha um funcionario na tabela!");
             alert.show();
         }
     }
 
     @FXML
     public void handleButtonDelete() throws IOException {
+
+        //verificar se existe este funcionario está associado a algum treino
+        
         Funcionario funcionario = tableViewFuncionarios.getSelectionModel().getSelectedItem();
         if (funcionario != null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -122,11 +127,12 @@ public class AnchorPaneFuncController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 funcionarioDAO.delete(funcionario);
+                showConfirmationAlert(2);
                 loadTableViewFuncionarios();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Por favor, escolha um funcionario na Tabela!");
+            alert.setContentText("Por favor, escolha um funcionario na tabela!");
             alert.show();
         }
     }
@@ -154,5 +160,40 @@ public class AnchorPaneFuncController implements Initializable {
 
         return controller.isButtonConfirmed();
 
+    }
+
+    public void showConfirmationAlert(int button) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        String title;
+        String content;
+
+        switch (button) {
+            case 0:
+                title = "Funcionário Cadastrado";
+                content = "Funcionário cadastrado com sucesso!";
+                break;
+            case 1:
+                title = "Funcionário Alterado";
+                content = "Funcionário alterado com sucesso!";
+                break;
+            case 2:
+                title = "Funcionário Apagado";
+                content = "Funcionário apagado com sucesso!";
+                break;
+            default:
+                title = "Operação Concluída";
+                content = "Operação concluída com sucesso!";
+                break;
+        }
+        
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.OK) {
+            alert.close();
+        }
     }
 }

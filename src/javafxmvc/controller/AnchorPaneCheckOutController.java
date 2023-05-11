@@ -1,193 +1,189 @@
 package src.javafxmvc.controller;
 
+import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import src.javafxmvc.model.domain.CheckOut;
 
 import java.sql.Connection;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
-import src.javafxmvc.model.domain.Aluno;
-import src.javafxmvc.model.dao.AlunoDAO;
-import src.javafxmvc.model.domain.CheckIn;
-import src.javafxmvc.model.dao.CheckInDAO;
-import src.javafxmvc.model.domain.CheckOut;
 import src.javafxmvc.model.dao.CheckOutDAO;
 import src.javafxmvc.model.database.Database;
 import src.javafxmvc.model.database.DatabaseFactory;
 
 public class AnchorPaneCheckOutController implements Initializable {
-    @FXML
-    private ComboBox<Aluno> comboBoxAlunos;
-    @FXML
-    private DatePicker datePicker;
-    @FXML
-    private Label labelValor;
-    @FXML
-    private TextField textFieldHora;
 
-    //labels de erro
     @FXML
-    private Label labelErroAluno;
-    @FXML
-    private Label labelErroData;
-    @FXML
-    private Label labelErroHora;
+    private TableView<CheckOut> tableViewCheckOuts;
 
-    private List<Aluno> listAlunos = new ArrayList<>(); 
-    private ObservableList<Aluno> observableListAlunos;
-    DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+    @FXML
+    private TableColumn<CheckOut, String> tableColumnCOData;
+
+    @FXML
+    private TableColumn<CheckOut, String> tableColumnCOHora;
+
+    @FXML
+    private TableColumn<CheckOut, String> tableColumnCOIdCI;
+
+
+    @FXML
+    private Button buttonRemover;
+
+    @FXML
+    private Button buttonAlterar;
+
+    @FXML
+    private Button buttonCadastrar;
 
     //Atributos para manipulação de Banco de Dados
     private final Database database = DatabaseFactory.getDatabase("postgresql");
     private final Connection connection = database.conectar();
-    private final CheckOutDAO checkOutDAO = new CheckOutDAO();
-    private final CheckInDAO checkInDAO = new CheckInDAO();
-    private final AlunoDAO alunoDAO = new AlunoDAO();
-   
+    private final CheckOutDAO checkoutDAO = new CheckOutDAO();
+
+    private List<CheckOut> listCheckOuts;
+    private ObservableList<CheckOut> observableListCheckOuts;
+        
+
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-        checkOutDAO.setConnection(connection);
-        alunoDAO.setConnection(connection);
-        checkInDAO.setConnection(connection);
+    public void initialize(URL location, ResourceBundle resources) {
+        checkoutDAO.setConnection(connection);
 
-        datePicker.valueProperty().addListener((observable, oldValue, newValue) -> { loadTime();});
-        loadAlunos();
+        loadTableViewCheckOuts();
     }
-    
+
+    public void loadTableViewCheckOuts() {
+        tableColumnCOData.setCellValueFactory(new PropertyValueFactory<>("data"));
+        tableColumnCOHora.setCellValueFactory(new PropertyValueFactory<>("hora"));
+        tableColumnCOIdCI.setCellValueFactory(new PropertyValueFactory<>("checkin_id"));
+        
+        listCheckOuts = checkoutDAO.list();
+
+        /* Populate TableView */
+        observableListCheckOuts = FXCollections.observableArrayList(listCheckOuts);
+        tableViewCheckOuts.setItems(observableListCheckOuts);
+    }
+
     @FXML
-    public void handleButtonSave() {
-        cleanErrors();
-        int idCheckIn = validateData();
-        if ( idCheckIn != 0){
-            CheckOut checkOut = new CheckOut();
-            checkOut.setData(datePicker.getValue());
-            checkOut.setHora(LocalTime.parse(textFieldHora.getText(), formatoHora));      
-            checkOut.setCheckIn_id(idCheckIn);
-            checkOutDAO.insert(checkOut);
-            
-            showConfirmationAlert();
-        }
-    }
-
-    public void loadAlunos(){
-        listAlunos = alunoDAO.list();
-        observableListAlunos = FXCollections.observableArrayList(listAlunos);
-        comboBoxAlunos.setItems(observableListAlunos);
-    }
-
-    public void loadTime(){
-        String horaFormatada = LocalTime.now().format(formatoHora);
-        textFieldHora.setText(horaFormatada);
-    }
-
-    public void cleanErrors() {
-        labelErroAluno.setText(null);
-        labelErroData.setText(null);
-        labelErroHora.setText(null);
-    }
-
-    /** 
-     * Retorna idCheckIn; caso todas as validações estejam corretas
-     * Retorna 0; caso contrário
-     */
-    public int validateData(){
-        Aluno alunoSelecionado = comboBoxAlunos.getSelectionModel().getSelectedItem();
-        int idCheckIn = 0;
-        
-        //verifica se selecionou um aluno
-        if (alunoSelecionado == null) { 
-            labelErroAluno.setText("Selecione um aluno.");
-            return idCheckIn;
-        }
-
-        //verifica se a data está vazia
-        if (datePicker.getValue() == null) {
-            labelErroData.setText("Selecione uma data de checkOut válida.");
-            return idCheckIn;
-        } 
-
-        //verifica se é uma data futura
-        if (datePicker.getValue().isAfter(LocalDate.now())) {
-            labelErroData.setText("A data de checkOut não pode ser futura.");
-            return idCheckIn;
-        }
-        
-        CheckIn checkInAnterior = checkInDAO.search(alunoSelecionado.getIdAluno(), datePicker.getValue());
-    
-        //verifica se existe um check in realizado por aquele aluno naquela data
-        if(checkInAnterior.getIdCheckIn() == 0){
-            labelErroData.setText("Não foi realizado nenhum check in por este aluno nesta data.");
-            return idCheckIn;
-        }
-
-        //verifica se já existe um check out realizado por aquele aluno naquela data
-        if (checkOutDAO.search(checkInAnterior.getIdCheckIn())){
-            labelErroData.setText("Já existe um check out realizado por este aluno nesta data.");
-            return idCheckIn;
-        }
-
-        //verifica se a hora está vazia
-        if (textFieldHora.getText() == null) {
-            labelErroHora.setText("O campo hora não pode estar vazio.");
-            return idCheckIn;
-        }
-
-        //verifica se a hora está no formato correto
-        if (!validateTime(textFieldHora.getText())){
-            labelErroHora.setText("Hora inválida! A hora deve estar no formato HH:mm:ss (por exemplo, 09:30:00)");
-            return idCheckIn;
-        }
-
-        //verifica se a hora do check out é maior que a hora do check in
-        if (checkInAnterior.getHora().compareTo(LocalTime.parse(textFieldHora.getText(), formatoHora)) < 0) {
-            idCheckIn = checkInAnterior.getIdCheckIn(); 
-            return idCheckIn; 
-        }else{
-            labelErroHora.setText("A hora do check out deve ser superior a hora do check in");
-            return idCheckIn;
-        }
-    }
-
-    public boolean validateTime (String hora) {
-        try {
-            LocalTime horaLocal = LocalTime.parse(hora, formatoHora);
-            return horaLocal != null;
-        } catch (DateTimeParseException e) {
-            return false;
+    public void handleButtonRegister() throws IOException {
+        CheckOut checkout = new CheckOut();
+        boolean buttonConfirmarClicked = showDialog(checkout, 0);
+        if (buttonConfirmarClicked) {
+            checkoutDAO.insert(checkout);
+            showConfirmationAlert(0);
+            loadTableViewCheckOuts();
         }
     }
 
     @FXML
-    public void handleButtonCancel(){
-        //getDialogStage().close();
+    public void handleButtonUpdate() throws IOException {
+        CheckOut checkout = tableViewCheckOuts.getSelectionModel().getSelectedItem(); //Obtendo checkout selecionado
+        if (checkout != null) {
+            boolean buttonConfirmarClicked = showDialog(checkout, 1);
+            if (buttonConfirmarClicked) {
+                checkoutDAO.update(checkout);
+                showConfirmationAlert(1);
+                loadTableViewCheckOuts();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Por favor, escolha um checkout na tabela!");
+            alert.show();
+        }
     }
 
-    public void showConfirmationAlert() {
+    @FXML
+    public void handleButtonDelete() throws IOException {        
+        CheckOut checkout = tableViewCheckOuts.getSelectionModel().getSelectedItem();
+        if (checkout != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Tem certeza que deseja remover este checkout?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                checkoutDAO.delete(checkout);
+                showConfirmationAlert(2);
+                loadTableViewCheckOuts();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Por favor, escolha um checkout na tabela!");
+            alert.show();
+        }
+    }
+
+    public boolean showDialog(CheckOut checkout, int button) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(AnchorPaneFuncDialogController.class.getResource("../view/AnchorPaneCheckOutDialog.fxml"));
+        AnchorPane page = (AnchorPane) loader.load();
+
+        // Criando um Estágio de Diálogo (Stage Dialog)
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("CheckOut");  
+
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+
+        // Setando o checkout no Controller.
+        AnchorPaneCheckOutDialogController controller = loader.getController();
+        controller.setDialogStage(dialogStage);
+        controller.setTitle(button);
+        controller.setCheckOut(checkout);
+
+        // Mostra o Dialog e espera até que o usuário o feche
+        dialogStage.showAndWait();
+
+        return controller.isButtonConfirmed();
+
+    }
+
+    public void showConfirmationAlert(int button) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Check-Out Registrado");
+        String title;
+        String content;
+
+        switch (button) {
+            case 0:
+                title = "CheckOut Cadastrado";
+                content = "CheckOut cadastrado com sucesso!";
+                break;
+            case 1:
+                title = "CheckOut Alterado";
+                content = "CheckOut alterado com sucesso!";
+                break;
+            case 2:
+                title = "CheckOut Apagado";
+                content = "CheckOut apagado com sucesso!";
+                break;
+            default:
+                title = "Operação Concluída";
+                content = "Operação concluída com sucesso!";
+                break;
+        }
+        
+        alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText("Seu check-out foi registrado com sucesso!!");
+        alert.setContentText(content);
 
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.OK) {
             alert.close();
-            //getDialogStage().close();
         }
     }
 }
