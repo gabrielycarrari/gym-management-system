@@ -125,11 +125,12 @@ public class FuncionarioDAO {
             ResultSet resultado = stmt.executeQuery();
             if (resultado.next()) {
                 retorno = new Funcionario();
-                retorno.setUsuario(resultado.getString("usuario"));
+                retorno.setUsuario(usuario);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Funcionario.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return retorno;
     }
 }

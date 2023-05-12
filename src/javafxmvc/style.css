@@ -7,10 +7,8 @@
 /* */
 
 .input {
-    -fx-pref-height: 48px;
     -fx-pref-width: 380px;
     -fx-padding: 16px;
-
     -fx-background-color: #FFFFFF;
     -fx-border-width: 2px;
     -fx-border-color: rgba(204, 204, 204, 0.5);
@@ -25,22 +23,62 @@
 .button.login {
     -fx-pref-height: 48px;
     -fx-pref-width: 380px;
-
     -fx-display: flex;
     -fx-justify-content: center;
     -fx-align-items: center;
-
     -fx-background-color: #408BFF;
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 12pt;
     -fx-font-weight: bold;
-
     -fx-opacity: 0.7;
 }
 
 .button.login:hover {
     -fx-opacity: 1;
     -fx-cursor: hand;
+}
+
+.button.register {
+    -fx-pref-height: 48px;
+    -fx-pref-width: 150px;
+    -fx-display: flex;
+    -fx-justify-content: center;
+    -fx-align-items: center;
+    -fx-background-color: #408BFF;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 12pt;
+    -fx-font-weight: bold;
+    -fx-opacity: 0.7;
+}
+
+.button.register:hover {
+    -fx-opacity: 1;
+    -fx-cursor: hand;
+}
+
+.button.cancel {
+    -fx-pref-height: 48px;
+    -fx-pref-width: 120px;
+    -fx-display: flex;
+    -fx-justify-content: center;
+    -fx-align-items: center;
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #408BFF;
+    -fx-border-width: 1px;
+    -fx-border-color: #408BFF;
+    -fx-font-size: 12pt;
+    -fx-font-weight: bold;
+    -fx-opacity: 0.7;
+}
+
+.button.cancel:hover {
+    -fx-opacity: 1;
+    -fx-cursor: hand;
+}
+
+.button.remove {
+    -fx-text-fill: #ff4040;
+    -fx-border-color: #ff4040;
 }
 
 .h1 {
@@ -70,6 +108,29 @@
     -fx-text-fill: #FF2E2E;
 }
 
+.date-picker {
+    -fx-pref-width: 380px;
+    -fx-padding: 9px;
+    -fx-background-color: #FFFFFF;
+    -fx-border-width: 2px;
+    -fx-border-color: rgba(204, 204, 204, 0.5);
+    -fx-border-radius: 5px;
+    -fx-font-size: 14pt;
+    -fx-text-fill: #333333;
+}
+
+.date-picker:hover {
+    -fx-background-color: #F5F5F5;
+}
+
+.date-picker .arrow {
+    -fx-background-color: #333333;
+}
+
+.date-picker .day-cell {
+    -fx-font-size: 14pt;
+    -fx-text-fill: #333333;
+}
 
 /* */
 
@@ -102,4 +163,11 @@
     -fx-cursor: hand;
     -fx-background-color: #25334C;
     -fx-text-fill: #FFFFFF;
+}
+
+.pieChart {
+    -fx-background-color: #FFFFFF;
+    -fx-font-size: 8pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
 }
