@@ -121,7 +121,7 @@ public class AnchorPanePagamentoController implements Initializable {
         Pagamento pagamento = tableViewPagamentos.getSelectionModel().getSelectedItem();
         if (pagamento != null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Tem certeza que deseja remover este funcionário?");
+            alert.setContentText("Tem certeza que deseja remover este pagamento?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 pagamentoDAO.delete(pagamento);

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="917.0" prefWidth="824.0" styleClass="body" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.javafxmvc.controller.AnchorPaneGraficoController">
+   <children>
+      <PieChart fx:id="pieChartGenero" layoutX="152.0" layoutY="38.0" prefHeight="296.0" prefWidth="520.0" styleClass="pieChart" title="Porcentagem por Gênero" />
+   </children>
+</AnchorPane>

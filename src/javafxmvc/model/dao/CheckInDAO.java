@@ -24,6 +24,8 @@ public class CheckInDAO {
         this.connection = connection;
     }
 
+    // falta colocar o resto dos métodos (insertm, update, delete, list)
+    
     public CheckIn findById(int idCheckIn) { 
         String sql = "SELECT * FROM CheckIn WHERE idcheckin=?";
         CheckIn retorno = new CheckIn();
