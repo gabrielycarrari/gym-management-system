@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioTotalPagamentos" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="767fa269-1e0a-49a2-b397-9ea08117600a">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="db_academia"/>
+	<parameter name="valorTotal" class="java.lang.Float"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT pagamento.aluno_id, aluno.nome, SUM(pagamento.valor)
+		FROM pagamento
+		JOIN aluno ON pagamento.aluno_id = aluno.idaluno
+		GROUP BY pagamento.aluno_id, aluno.nome
+		HAVING SUM(pagamento.valor) >= $P{valorTotal}
+		ORDER BY pagamento.aluno_id]]>
+	</queryString>
+	<field name="aluno_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="aluno_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pagamento"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="aluno"/>
+	</field>
+	<field name="sum" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="sum"/>
+	</field>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#25334C" uuid="8f6d749d-8f16-4ab0-8e2e-cfd8f5190f05"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="f80a78a4-60db-4ed8-9e91-d47d56ca5515"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Pagamentos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="390" y="43" width="183" height="36" forecolor="#FFFFFF" uuid="a11f84fb-557b-453b-9faa-ca74a7bf7bd7"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Relatório total de pagamentos por aluno]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="77b775a7-40f1-4240-b9a4-9fe85f74bd11"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="185" height="20" forecolor="#25334C" backcolor="#E6E6E6" uuid="3aacfc96-9f44-4c7a-b096-d798052f6d7b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="36c9c161-140a-4a09-8bc8-888b1c551272"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#25334C"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#25334C"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#25334C"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#25334C"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id Aluno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="185" y="0" width="185" height="20" forecolor="#25334C" backcolor="#E6E6E6" uuid="22047802-4a0e-46bb-898d-a7e94d222ccb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="298c6bc5-ab45-4597-9541-2fcc6085b5de"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#25334C"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#25334C"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#25334C"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#25334C"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome Aluno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="370" y="0" width="185" height="20" forecolor="#25334C" backcolor="#E6E6E6" uuid="50a17bc6-c8e9-4b0a-a86b-1c04bdb48a18">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d2ba0412-9cdc-472d-b961-3f92aa5fac3f"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#25334C"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#25334C"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#25334C"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#25334C"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="ea19ce2d-c969-49f7-b9f8-6c9b0ed1daf0"/>
+			</line>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="0" y="0" width="185" height="20" uuid="166bb1de-35cb-48e1-a0f9-a74caa1d1d65">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="36c9c161-140a-4a09-8bc8-888b1c551272"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aluno_id}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="185" y="0" width="185" height="20" uuid="80589ad8-0385-4672-8ee1-de7423963b44">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="298c6bc5-ab45-4597-9541-2fcc6085b5de"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="370" y="0" width="185" height="20" uuid="95568161-4efd-437e-9750-8341bf6c3580">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d2ba0412-9cdc-472d-b961-3f92aa5fac3f"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="34839918-82ca-42fa-ba83-149e59e84875"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="c8fe9d57-37fe-4ba7-b572-c09c0b2817aa"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="75357a57-1320-4904-b23d-d0be9c4ef3af"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
