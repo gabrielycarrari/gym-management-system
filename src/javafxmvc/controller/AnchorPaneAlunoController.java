@@ -61,7 +61,7 @@ public class AnchorPaneAlunoController implements Initializable {
     }
 
     public void loadTableViewAlunos() {
-       tableColumnAlunoNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        tableColumnAlunoNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tableColumnAlunoCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         tableColumnAlunoEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
         tableColumnAlunoGenero.setCellValueFactory(new PropertyValueFactory<>("genero"));

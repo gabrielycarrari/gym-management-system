@@ -93,4 +93,30 @@ public class AlunoDAO {
         return retorno;
     }
         
+    public Aluno findById(Integer id){
+       
+        String sql = "SELECT * FROM aluno WHERE idAluno=?";
+        Aluno aluno = new Aluno();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+            
+            ResultSet resultado = stmt.executeQuery();
+
+            while (resultado.next()) {
+            
+                aluno.setIdAluno(resultado.getInt("idAluno"));
+                aluno.setNome(resultado.getString("nome"));
+                aluno.setCpf(resultado.getString("cpf"));
+                aluno.setEndereco(resultado.getString("endereco"));
+                aluno.setGenero(resultado.getString("genero"));
+                aluno.setPontos(resultado.getInt("pontos"));
+                aluno.setPlano_id(resultado.getInt("plano_id"));
+            }
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(AlunoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return aluno;
+    }
 }
