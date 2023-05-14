@@ -43,11 +43,11 @@ public class CheckOut {
         this.hora = hora;
     }
 
-    public int getCheckIn_id() {
+    public int getCheckin_id() {
         return checkIn_id;
     }
 
-    public void setCheckIn_id(int checkIn_id) {
+    public void setCheckin_id(int checkIn_id) {
         this.checkIn_id = checkIn_id;
     }
 

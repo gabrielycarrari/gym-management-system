@@ -1,5 +1,4 @@
 package src.javafxmvc.model.dao;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,14 +8,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import src.javafxmvc.model.domain.Aluno;
-
 public class AlunoDAO {
     private Connection connection;
-
     public Connection getConnection() {
         return connection;
     }
-
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
@@ -92,31 +88,22 @@ public class AlunoDAO {
         }
         return retorno;
     }
-        
-    public Aluno findById(Integer id){
-       
-        String sql = "SELECT * FROM aluno WHERE idAluno=?";
-        Aluno aluno = new Aluno();
+
+    public Aluno findById(int idAluno) { 
+        String sql = "SELECT * FROM Aluno WHERE idAluno=?";
+        Aluno retorno = new Aluno();
+
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, id);
-            
+            stmt.setInt(1, idAluno);
             ResultSet resultado = stmt.executeQuery();
-
-            while (resultado.next()) {
-            
-                aluno.setIdAluno(resultado.getInt("idAluno"));
-                aluno.setNome(resultado.getString("nome"));
-                aluno.setCpf(resultado.getString("cpf"));
-                aluno.setEndereco(resultado.getString("endereco"));
-                aluno.setGenero(resultado.getString("genero"));
-                aluno.setPontos(resultado.getInt("pontos"));
-                aluno.setPlano_id(resultado.getInt("plano_id"));
+            if (resultado.next()) {
+                retorno.setIdAluno(resultado.getInt("idAluno"));
+                retorno.setNome(resultado.getString("nome"));
             }
-           
         } catch (SQLException ex) {
-            Logger.getLogger(AlunoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Aluno.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return aluno;
+        return retorno;
     }
 }

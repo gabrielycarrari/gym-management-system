@@ -84,5 +84,20 @@ public class PlanoDAO {
         return retorno;
     }
 
-    
+    public float getPrice(int idPlano) { 
+        String sql = "SELECT preco FROM Plano WHERE idPlano=?";
+        float retorno = 0;
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, idPlano);
+            ResultSet resultado = stmt.executeQuery();
+            if (resultado.next()) {
+                retorno = resultado.getFloat("preco");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Plano.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
+    }
 }
