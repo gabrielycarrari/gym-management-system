@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="980.0" styleClass="body" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.javafxmvc.controller.AnchorPaneDashboardTabController">
+   <children>
+      <Label layoutX="70.0" layoutY="50.0" styleClass="h1" text="Dashboard" />
+      <TabPane layoutX="70.0" layoutY="130.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="130.0">
+         <tabs>
+            <Tab closable="false" text="Gráficos">
+               <content>
+                  <ScrollPane hbarPolicy="NEVER">
+                     <content>
+                        <AnchorPane fx:id="anchorPaneGraficos" prefHeight="541.0" prefWidth="824.0" styleClass="body" stylesheets="@../style.css" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </Tab>
+            <Tab closable="false" text="Relatórios">
+               <content>
+                  <ScrollPane hbarPolicy="NEVER">
+                     <content>
+                        <AnchorPane fx:id="anchorPaneRelatorios" prefHeight="541.0" prefWidth="824.0" styleClass="body" stylesheets="@../style.css" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
