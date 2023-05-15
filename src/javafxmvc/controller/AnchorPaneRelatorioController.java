@@ -51,6 +51,8 @@ public class AnchorPaneRelatorioController implements Initializable {
     @FXML
     private Button buttonImprimirPags;
     @FXML
+    private Button buttonImprimirAlunoCI;
+    @FXML
     private Label labelErroValorTotal;
     
     private final Database database = DatabaseFactory.getDatabase("postgresql");

@@ -118,8 +118,6 @@ public class AnchorPaneFuncController implements Initializable {
     @FXML
     public void handleButtonDelete() throws IOException {
 
-        //verificar se existe este funcionario está associado a algum treino
-        
         Funcionario funcionario = tableViewFuncionarios.getSelectionModel().getSelectedItem();
         if (funcionario != null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
