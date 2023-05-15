@@ -95,6 +95,31 @@ public class FuncionarioDAO {
         return retorno;
     }
 
+    public Funcionario findById(Integer id){
+       
+        String sql = "SELECT * FROM funcionario WHERE idFuncionario=?";
+        Funcionario funcionario = new Funcionario();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+            
+            ResultSet resultado = stmt.executeQuery();
+
+            while (resultado.next()) {
+            
+                funcionario.setIdFuncionario(resultado.getInt("idFuncionario"));
+                funcionario.setNome(resultado.getString("nome"));
+                funcionario.setCpf(resultado.getString("cpf"));
+                funcionario.setEndereco(resultado.getString("endereco"));
+                funcionario.setTipo(resultado.getString("tipo"));
+            }
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(AlunoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return funcionario;
+    }
+
     public Funcionario validate(String usuario, String senha) { // mudar validate
         String sql = "SELECT * FROM funcionario WHERE usuario=? AND senha=?";
         Funcionario retorno = null;
