@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioCheckInsAlunos" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="169d420d-0d49-42a0-9e7c-7cb7c49b14bf">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="db_academia"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT checkin.aluno_id, aluno.nome, count(checkin.idcheckin) 
+FROM checkin 
+    JOIN aluno ON checkin.aluno_id = aluno.idaluno 
+    GROUP BY checkin.aluno_id, aluno.nome, aluno.idaluno 
+    HAVING aluno.idaluno = 1
+    ORDER BY aluno.nome]]>
+	</queryString>
+	<field name="aluno_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="aluno_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="checkin"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="aluno"/>
+	</field>
+	<field name="count" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="count"/>
+	</field>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#25334C" uuid="6babb0c7-6d5e-48d6-9822-98e7fdfd417f"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="b93014ee-58b1-481b-98e0-9c5d7f93994c"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CheckIns]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="37" forecolor="#FFFFFF" uuid="81d4cdd7-6a49-4d6f-92ad-62eec95a6268"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Relatório com total de checkins por aluno]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="1fcf8cd3-ed13-467c-82c1-02591bfc93cc"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="185" height="20" forecolor="#25334C" backcolor="#E6E6E6" uuid="b7a8bc18-f0fa-4760-9e1a-c74acb183c11">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="858fe207-70e7-4164-a9d6-e099d001e6c0"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id Aluno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="185" y="0" width="185" height="20" forecolor="#25334C" backcolor="#E6E6E6" uuid="ff8956b0-725f-4c74-b794-ec0fb7120229">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7341e6e4-3af1-4d97-b95d-e397957a09f8"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome Aluno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="370" y="0" width="185" height="20" forecolor="#25334C" backcolor="#E6E6E6" uuid="14e8a7f8-b55e-411d-bc53-d4e2c11f5f1b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1031898e-701b-4c08-9094-2f9cc867add5"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total CheckIns]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="d0d1e21b-9359-4835-9e9c-21e32ee4d991"/>
+			</line>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="0" y="0" width="185" height="20" uuid="b822659b-d44e-4957-bf64-ce40ea42fbbc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="858fe207-70e7-4164-a9d6-e099d001e6c0"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aluno_id}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="185" y="0" width="185" height="20" uuid="dcd1f73b-fcc2-48ff-87df-4a3ab9d935ff">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7341e6e4-3af1-4d97-b95d-e397957a09f8"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="370" y="0" width="185" height="20" uuid="f98bcf8a-8c2b-40cf-9282-0f9f2a5ce970">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1031898e-701b-4c08-9094-2f9cc867add5"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{count}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="9ebafef5-23cf-4289-b34f-f24b4c15b366"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="5c4cf9fa-efc2-4fee-a232-a116113a0f67"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="28e25a7c-91c0-4bcd-a494-2ba47a634745"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
