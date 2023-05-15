@@ -205,7 +205,7 @@ public class AnchorPaneCheckInDialogController implements Initializable{
                 qdtErros++;
             }
             else if(checkOutDAO.search(checkIn.getIdCheckIn())) {
-                if(checkIn.getHora().compareTo(LocalTime.parse(textFieldHora.getText(), formatoHora)) > 0 ) {
+                if(checkIn.getHora().compareTo(LocalTime.parse(textFieldHora.getText(), formatoHora)) < 0 ) {
                     labelErroHora.setText("O horário de checkin não pode ser menor que o de checkout");
                     qdtErros++;
                 }

@@ -108,10 +108,13 @@ INSERT INTO Aluno (nome, cpf, endereco, genero, pontos, plano_id) VALUES ('Carla
 
 -- Inserts for Funcionario
 INSERT INTO funcionario (nome, cpf, endereco, tipo, usuario, senha) 
-VALUES ('Fernanda Ramos', '123456789-12', 'Rua dos Funcionários, 123', 'personal trainer' 'fernanda', 'fernanda');
+VALUES ('Alda Torres', '123.456.789-13', 'Rua dos Funcionários, 123', 'personal trainer' 'alda', 'alda');
 
 INSERT INTO funcionario (nome, cpf, endereco, tipo, usuario, senha) 
-VALUES ('Gabriely Carrari', '123456789-12', 'Rua dos Funcionários, 123', 'personal trainer' 'gaby', 'gaby');
+VALUES ('Fernanda Ramos', '123.456.789-12', 'Rua dos Funcionários, 123', 'personal trainer' 'fernanda', 'fernanda');
+
+INSERT INTO funcionario (nome, cpf, endereco, tipo, usuario, senha) 
+VALUES ('Gabriely Carrari', '123.456.789-21', 'Rua dos Funcionários, 123', 'personal trainer' 'gaby', 'gaby');
 
 INSERT INTO Funcionario (nome, cpf, endereco, tipo, usuario, senha)
 VALUES ('João Silva', '123.456.789-00', 'Rua dos Funcionários, 123', 'personal trainer', 'joao.silva', 'senha123');

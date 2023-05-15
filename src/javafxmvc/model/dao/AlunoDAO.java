@@ -67,7 +67,7 @@ public class AlunoDAO {
     }
     
     public List<Aluno> list() {
-        String sql = "SELECT * FROM aluno";
+        String sql = "SELECT * FROM aluno ORDER BY nome ASC";
         List<Aluno> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -100,6 +100,29 @@ public class AlunoDAO {
             if (resultado.next()) {
                 retorno.setIdAluno(resultado.getInt("idAluno"));
                 retorno.setNome(resultado.getString("nome"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Aluno.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
+    }
+
+    public Aluno findObjectById(int idAluno) { 
+        String sql = "SELECT * FROM Aluno WHERE idAluno=?";
+        Aluno retorno = new Aluno();
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, idAluno);
+            ResultSet resultado = stmt.executeQuery();
+            if (resultado.next()) {
+                retorno.setIdAluno(resultado.getInt("idAluno"));
+                retorno.setNome(resultado.getString("nome"));
+                retorno.setCpf(resultado.getString("cpf"));
+                retorno.setEndereco(resultado.getString("endereco"));
+                retorno.setGenero(resultado.getString("genero"));
+                retorno.setPontos(resultado.getInt("pontos"));
+                retorno.setPlano_id(resultado.getInt("plano_id"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Aluno.class.getName()).log(Level.SEVERE, null, ex);

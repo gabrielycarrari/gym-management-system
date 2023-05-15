@@ -136,8 +136,9 @@ public class AnchorPaneFuncDialogController implements Initializable {
         // Valida os dados inseridos pelo usuário
         if (validateData()){
             // Define os valores inseridos pelo usuário como propriedades do objeto "funcionario"
+            String CPF = textFieldCPF.getText();
             funcionario.setNome(textFieldNome.getText());
-            funcionario.setCpf(textFieldCPF.getText());
+            funcionario.setCpf(convertToCPF(CPF));
             funcionario.setEndereco(textFieldEndereco.getText());
             funcionario.setTipo(comboBoxTipos.getSelectionModel().getSelectedItem().toLowerCase());
             funcionario.setUsuario(textFieldUsuario.getText());
@@ -193,6 +194,10 @@ public class AnchorPaneFuncDialogController implements Initializable {
             labelErroCPF.setText("O campo CPF não pode estar vazio");
             qdtErros++;
         }
+        else if(!validateCPFFormat(textFieldCPF.getText())) {
+            labelErroCPF.setText("CPF inválido");
+            qdtErros++;
+        }
 
         // Verifica se o campo Endereco está vazio
         if(textFieldEndereco.getText() == null || textFieldEndereco.getText().length() == 0) {
@@ -235,7 +240,11 @@ public class AnchorPaneFuncDialogController implements Initializable {
         }
 
         // Verifica se as senhas digitadas coincidem
-        if(!passwordFieldSenha.getText().equals(passwordFieldSenhaConfirmada.getText())) {
+        if(passwordFieldSenhaConfirmada.getText() == null || passwordFieldSenhaConfirmada.getText().length() == 0) {
+            labelErroSenhaConfirmada.setText("O campo Confirmar Senha não pode estar vazio");
+            qdtErros++;
+        }
+        else if(!passwordFieldSenha.getText().equals(passwordFieldSenhaConfirmada.getText())) {
             labelErroSenhaConfirmada.setText("As senhas não coincidem");
             qdtErros++;
         }
@@ -246,5 +255,30 @@ public class AnchorPaneFuncDialogController implements Initializable {
         }else{
             return true;
         }
+    }
+
+    public static boolean validateCPFFormat(String cpf) {
+        String cleanedCPF = cpf.replaceAll("\\D", "");
+
+        if (cleanedCPF.length() != 11 || !cleanedCPF.matches("\\d{11}")) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public String convertToCPF(String inputString) {
+        String cleanedString = inputString.replaceAll("\\D", "");
+
+        while (cleanedString.length() < 11) {
+            cleanedString = "0" + cleanedString;
+        }
+
+        String formattedCPF = cleanedString.substring(0, 3) + "." +
+                cleanedString.substring(3, 6) + "." +
+                cleanedString.substring(6, 9) + "-" +
+                cleanedString.substring(9);
+
+        return formattedCPF;
     }
 }
