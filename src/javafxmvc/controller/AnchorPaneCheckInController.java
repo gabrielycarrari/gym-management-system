@@ -29,6 +29,7 @@ import src.javafxmvc.model.dao.CheckInDAO;
 import src.javafxmvc.model.dao.CheckOutDAO;
 import src.javafxmvc.model.database.Database;
 import src.javafxmvc.model.database.DatabaseFactory;
+import src.javafxmvc.model.domain.Aluno;
 import src.javafxmvc.model.domain.CheckIn;
 
 
@@ -103,12 +104,16 @@ public class AnchorPaneCheckInController implements Initializable {
         CheckIn checkin = new CheckIn();
         boolean buttonConfirmarClicked = showDialog(checkin, 0);
         if (buttonConfirmarClicked) {
-            System.out.println(checkin);
-            /* 
+            
+            Aluno aluno = alunoDAO.findObjectById(checkin.getAluno_id());
+            Integer pontos = aluno.getPontos() + 5;
+            aluno.setPontos(pontos);
+
+            alunoDAO.update(aluno);
+
             checkinDAO.insert(checkin);
             showConfirmationAlert(0);
             loadTableViewCheckIns();
-            */
         }
     }
 

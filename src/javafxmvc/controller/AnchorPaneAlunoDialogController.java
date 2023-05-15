@@ -258,22 +258,6 @@ public class AnchorPaneAlunoDialogController implements Initializable {
         }
     }
     
-    /*
-    public boolean validateCPF(String inputString) {
-        if (inputString.length() != 11) {  // Verifica se o tamanho da String é igual a 11
-            return false;
-        }
-
-        for (char c : inputString.toCharArray()) {
-            if (!Character.isDigit(c)) {  // Verifica se há apenas caracteres numéricos
-                return false;
-            }
-        }
-
-        return true;  // String is valid
-    }
-    */
-
     public static boolean validateCPFFormat(String cpf) {
         String cleanedCPF = cpf.replaceAll("\\D", "");
 

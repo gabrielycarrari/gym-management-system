@@ -73,7 +73,7 @@ public class FuncionarioDAO {
     }
 
     public List<Funcionario> list() {
-        String sql = "SELECT * FROM funcionario";
+        String sql = "SELECT * FROM funcionario ORDER BY nome ASC";
         List<Funcionario> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
