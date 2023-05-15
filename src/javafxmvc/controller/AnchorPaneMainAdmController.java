@@ -106,7 +106,7 @@ public class AnchorPaneMainAdmController implements Initializable {
     }
 
     public void switchAnchorPaneDashboard() throws IOException {
-        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("../view/AnchorPaneDashboard.fxml"));
+        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("../view/AnchorPaneDashboardTab.fxml"));
         anchorPane.getChildren().setAll(a);
     }
 
