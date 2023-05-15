@@ -41,6 +41,12 @@ public class AnchorPaneMainAdmController implements Initializable {
 
     @FXML
     private AnchorPane anchorPane;
+
+    @FXML
+    private Button buttonCheckIn;
+
+    @FXML
+    private Button buttonCheckOut;
     
 
     @Override
@@ -67,11 +73,13 @@ public class AnchorPaneMainAdmController implements Initializable {
         }
 
         setImageToButton(buttonDashboard, "icon-dashboard.png");
-        setImageToButton(buttonFuncionarios, "icon-alunos.png");
+        setImageToButton(buttonFuncionarios, "icon-funcionarios.png");
         setImageToButton(buttonAlunos, "icon-alunos.png");
         setImageToButton(buttonTreinos, "icon-treinos.png");
         setImageToButton(buttonPagamentos, "icon-pagamentos.png");
         setImageToButton(buttonLogOut, "icon-logout.png");
+        setImageToButton(buttonCheckIn, "icon-checkin.png");
+        setImageToButton(buttonCheckOut, "icon-checkout.png");
     }
 
     public void setImageToButton(Button button, String img) {

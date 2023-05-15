@@ -39,6 +39,12 @@ public class AnchorPaneMainFuncController implements Initializable {
     @FXML
     private AnchorPane anchorPane;
     
+    @FXML
+    private Button buttonCheckIn;
+
+    @FXML
+    private Button buttonCheckOut;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -68,6 +74,8 @@ public class AnchorPaneMainFuncController implements Initializable {
         setImageToButton(buttonTreinos, "icon-treinos.png");
         setImageToButton(buttonPagamentos, "icon-pagamentos.png");
         setImageToButton(buttonLogOut, "icon-logout.png");
+        setImageToButton(buttonCheckIn, "icon-checkin.png");
+        setImageToButton(buttonCheckOut, "icon-checkout.png");
     }
 
     public void setImageToButton(Button button, String img) {

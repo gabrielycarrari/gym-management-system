@@ -83,35 +83,14 @@ CREATE TABLE TreinoExercicio (
 INSERT INTO admin (usuario, senha)
 VALUES ('admin', 'admin');
 
-INSERT INTO Funcionario (nome, cpf, endereco, tipo, usuario, senha)
-VALUES ('João Silva', '123.456.789-00', 'Rua dos Funcionários, 123', 'personal trainer', 'joao.silva', 'senha123');
+INSERT INTO Plano (tipo, preco) VALUES ('Plano mensal', 150.00);
+INSERT INTO Plano (tipo, preco) VALUES ('Plano anual', 120.00);
 
-INSERT INTO Plano (tipo, preco)
-VALUES ('Plano mensal', 150.00);
 
-INSERT INTO Aluno (nome, cpf, endereco, genero, pontos, plano_id)
-VALUES ('Maria Oliveira', '987.654.321-00', 'Avenida dos Alunos, 456', 'Feminino', 0, 1);
+-- New Inserts (Populating DB)
 
-INSERT INTO Pagamento (data, valor, aluno_id)
-VALUES ('2023-04-13', 100.00, 1);
-
-INSERT INTO CheckIn (data, hora, aluno_id)
-VALUES ('2023-04-13', '10:10:10', 1);
-
-INSERT INTO CheckOut (data, hora, checkIn_id)
-VALUES ('2023-04-13', '11:00:00', 1);
-
-INSERT INTO Exercicio (tipo, musculo, numSeries, numRepeticoes)
-VALUES ('Supino', 'Peitoral', 3, 12);
-
-INSERT INTO Treino (dataInicio, dataFinal, aluno_id, funcionario_id)
-VALUES ('2023-04-13', '2023-04-20', 1, 1);
-
-INSERT INTO TreinoExercicio (treino_id, exercicio_id)
-VALUES (1, 1);
-
--- New Inserts (Populating DB) 
--- Inserts for Aluno (testing)
+-- Inserts for Aluno
+INSERT INTO Aluno (nome, cpf, endereco, genero, pontos, plano_id) VALUES ('Maria Oliveira', '987.654.321-00', 'Avenida dos Alunos, 456', 'Feminino', 0, 1);
 INSERT INTO Aluno (nome, cpf, endereco, genero, pontos, plano_id) VALUES ('Maria Silva', '123.456.789-00', 'Rua A, 123', 'Feminino', 0, 1);
 INSERT INTO Aluno (nome, cpf, endereco, genero, pontos, plano_id) VALUES ('João Santos', '987.654.123-00', 'Avenida B, 456', 'Masculino', 0, 1);
 INSERT INTO Aluno (nome, cpf, endereco, genero, pontos, plano_id) VALUES ('Ana Souza', '555.444.333-00', 'Rua C, 789', 'Feminino', 0, 1);
@@ -125,3 +104,38 @@ INSERT INTO Aluno (nome, cpf, endereco, genero, pontos, plano_id) VALUES ('Felip
 INSERT INTO Aluno (nome, cpf, endereco, genero, pontos, plano_id) VALUES ('Rafaela Santos', '888.888.888-00', 'Rua K, 321', 'Feminino', 0, 1);
 INSERT INTO Aluno (nome, cpf, endereco, genero, pontos, plano_id) VALUES ('Rodrigo Silva', '555.555.555-00', 'Avenida L, 654', 'Masculino', 0, 1);
 INSERT INTO Aluno (nome, cpf, endereco, genero, pontos, plano_id) VALUES ('Carla Oliveira', '999.999.999-00', 'Rua M, 987', 'Feminino', 0, 1);
+
+
+-- Inserts for Funcionario
+INSERT INTO funcionario (nome, cpf, endereco, tipo, usuario, senha) 
+VALUES ('Fernanda Ramos', '123456789-12', 'Rua dos Funcionários, 123', 'personal trainer' 'fernanda', 'fernanda');
+
+INSERT INTO funcionario (nome, cpf, endereco, tipo, usuario, senha) 
+VALUES ('Gabriely Carrari', '123456789-12', 'Rua dos Funcionários, 123', 'personal trainer' 'gaby', 'gaby');
+
+INSERT INTO Funcionario (nome, cpf, endereco, tipo, usuario, senha)
+VALUES ('João Silva', '123.456.789-00', 'Rua dos Funcionários, 123', 'personal trainer', 'joao.silva', 'senha123');
+
+
+-- Inserts for Pagamento
+INSERT INTO Pagamento (data, valor, aluno_id) VALUES ('2023-04-13', 100.00, 1);
+
+
+-- Inserts for CheckIn
+INSERT INTO CheckIn (data, hora, aluno_id) VALUES ('2023-04-13', '10:10:10', 1);
+
+
+-- Inserts for CheckOut
+INSERT INTO CheckOut (data, hora, checkIn_id) VALUES ('2023-04-13', '11:00:00', 1);
+
+
+-- Inserts for Exercicio
+INSERT INTO Exercicio (tipo, musculo, numSeries, numRepeticoes) VALUES ('Supino', 'Peitoral', 3, 12);
+
+
+-- Inserts for Treino
+INSERT INTO Treino (dataInicio, dataFinal, aluno_id, funcionario_id) VALUES ('2023-04-13', '2023-04-20', 1, 1);
+
+
+-- Inserts for TreinoExercicio
+INSERT INTO TreinoExercicio (treino_id, exercicio_id) VALUES (1, 1);
