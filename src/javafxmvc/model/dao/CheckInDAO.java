@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javafx.scene.chart.XYChart;
 import src.javafxmvc.model.domain.CheckIn;
 
 public class CheckInDAO {
@@ -128,4 +130,23 @@ public class CheckInDAO {
         return retorno;
     }
     
+    public List<Object[]> extractMonth() { 
+        String sql = "SELECT EXTRACT(MONTH FROM data) AS mes, COUNT(*) AS total FROM CheckIn GROUP BY mes ORDER BY mes";
+        List<Object[]> retorno = new ArrayList<>();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet resultado = stmt.executeQuery();
+            while (resultado.next()) {
+                int month = resultado.getInt("mes");
+                int total = resultado.getInt("total");
+                Object[] row = new Object[2];
+                row[0] = month;
+                row[1] = total;
+                retorno.add(row);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
+    }
 }

@@ -103,12 +103,10 @@ public class AnchorPaneCheckInController implements Initializable {
         CheckIn checkin = new CheckIn();
         boolean buttonConfirmarClicked = showDialog(checkin, 0);
         if (buttonConfirmarClicked) {
-            System.out.println(checkin);
-            /* 
+            System.out.println(checkin); 
             checkinDAO.insert(checkin);
             showConfirmationAlert(0);
             loadTableViewCheckIns();
-            */
         }
     }
 

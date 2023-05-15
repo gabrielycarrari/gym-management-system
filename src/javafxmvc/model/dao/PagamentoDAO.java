@@ -87,24 +87,12 @@ public class PagamentoDAO {
     }
 
     public List<Object[]> listSumPagamentoPorAluno(float valor) {
-        /*String sql = "SELECT p.aluno_id, a.nome, sum(p.valor) " +
-                     "FROM aluno a, pagamento p " +
-                     "WHERE p.aluno_id = a.idaluno " +
-                     "GROUP BY p.aluno_id, a.nome";*/
         String sql = "SELECT pagamento.aluno_id, aluno.nome, SUM(pagamento.valor) " +
                     "FROM pagamento " +
                     "JOIN aluno ON pagamento.aluno_id = aluno.idaluno " +
                     "GROUP BY pagamento.aluno_id, aluno.nome " +
                     "HAVING SUM(pagamento.valor) >= ? " +
                     "ORDER BY pagamento.aluno_id;";
-        /*
-         * SELECT pagamento.aluno_id, aluno.nome, SUM(pagamento.valor)
-         * FROM pagamento
-         * JOIN aluno ON pagamento.aluno_id = aluno.idaluno
-         * GROUP BY pagamento.aluno_id, aluno.nome
-         * HAVING SUM(pagamento.valor) >= ?
-         * ORDER BY pagamento.aluno_id;
-         */
         List<Object[]> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);

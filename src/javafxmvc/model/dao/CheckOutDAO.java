@@ -67,7 +67,7 @@ public class CheckOutDAO {
     }
 
     public List<CheckOut> list() {
-        String sql = "SELECT * FROM checkOut";
+        String sql = "SELECT * FROM checkOut ORDER BY data ASC";
         List<CheckOut> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
