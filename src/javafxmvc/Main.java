@@ -14,12 +14,12 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("view/VBoxLoginFunc.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("view/AnchorPaneVenda.fxml"));
         
         scene = new Scene(root);
         
         stage.setScene(scene);
-        stage.setTitle("Sistema de Academia");
+        stage.setTitle("Cantina");
         stage.getIcons().add(new Image("src/javafxmvc/images/gym-icon.png"));
         stage.setHeight(720);
         stage.setWidth(1280);
