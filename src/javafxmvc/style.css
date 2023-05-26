@@ -151,13 +151,12 @@
 
 
 .sidebar .item {
-    -fx-pref-height: 100px;
-    -fx-pref-width: 100px;
+    -fx-pref-height: 48px;
+    -fx-pref-width: 200px;
     -fx-background-color: transparent;
-    -fx-border-color: #25334C;
+    -fx-border-color: transparent;
     -fx-font-weight: bold;
     -fx-text-fill: #707784;
-    -fx-alignment: center;
 }
 
 .sidebar .item:hover {
