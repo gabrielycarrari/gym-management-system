@@ -32,9 +32,8 @@ import java.sql.Connection;
 
 import src.javafxmvc.model.database.Database;
 import src.javafxmvc.model.database.DatabaseFactory;
+import src.javafxmvc.model.domain.Aluno;
 import src.javafxmvc.model.dao.PagamentoDAO;
-
-
 
 public class AnchorPaneRelatorioController implements Initializable {
     @FXML
@@ -51,6 +50,8 @@ public class AnchorPaneRelatorioController implements Initializable {
     private Button buttonPesquisarPags;
     @FXML
     private Button buttonImprimirPags;
+    @FXML
+    private Button buttonImprimirAlunoCI;
     @FXML
     private Label labelErroValorTotal;
     
@@ -113,6 +114,20 @@ public class AnchorPaneRelatorioController implements Initializable {
             jasperViewer.setVisible(true);
             
         }
+    }
+
+    @FXML
+    public void handleButtonPrintCheckIns() throws JRException{
+        HashMap filtro = new HashMap();
+        
+        URL url = getClass().getResource("../reports/RelatorioCheckInsAlunos.jasper");
+        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(url);
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, filtro, connection);//null: caso não existam filtros
+        JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);//false: não deixa fechar a aplicação principal
+        jasperViewer.setVisible(true);
+            
+        
     }
 
     public boolean validateData(){
