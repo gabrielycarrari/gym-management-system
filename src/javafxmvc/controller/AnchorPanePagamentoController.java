@@ -135,6 +135,18 @@ public class AnchorPanePagamentoController implements Initializable {
         }
     }
 
+    @FXML
+    public void handleButtonPrint() throws IOException {
+        Pagamento pagamento = tableViewPagamentos.getSelectionModel().getSelectedItem(); //Obtendo pagamento selecionado
+        if (pagamento != null) {
+            
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Por favor, escolha um pagamento na Tabela!");
+            alert.show();
+        }
+    }
+
     public boolean showDialog(Pagamento pagamento, int button) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(AnchorPanePagamentoDialogController.class.getResource("../view/AnchorPanePagamentoDialog.fxml"));

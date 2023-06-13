@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="980.0" styleClass="body" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.javafxmvc.controller.AnchorPanePagamentoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="980.0" styleClass="body" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.javafxmvc.controller.AnchorPanePagamentoController">
    <children>
       <Label layoutX="70.0" layoutY="50.0" styleClass="h1" text="Pagamentos" />
       <AnchorPane layoutX="14.0" layoutY="130.0" prefHeight="590.0" prefWidth="980.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="130.0">
@@ -24,16 +24,17 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Group AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="50.0">
+            <Group layoutX="377.0" layoutY="438.0" AnchorPane.bottomAnchor="52.0" AnchorPane.rightAnchor="11.0">
                <children>
-                  <Button fx:id="buttonRemover" layoutX="-31.0" mnemonicParsing="false" onAction="#handleButtonDelete" text="Remover">
+                  <Button fx:id="buttonImprimir" layoutX="-366.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleButtonPrint" styleClass="cancel" text="Imprimir" />
+                  <Button fx:id="buttonRemover" layoutX="2.0" mnemonicParsing="false" onAction="#handleButtonDelete" text="Remover">
                      <styleClass>
                         <String fx:value="remove" />
                         <String fx:value="cancel" />
                      </styleClass>
                   </Button>
-                  <Button fx:id="buttonAlterar" layoutX="119.0" mnemonicParsing="false" onAction="#handleButtonUpdate" styleClass="cancel" text="Alterar" />
-                  <Button fx:id="buttonCadastrar" layoutX="269.0" mnemonicParsing="false" onAction="#handleButtonRegister" styleClass="register" text="Cadastrar" />
+                  <Button fx:id="buttonAlterar" layoutX="152.0" mnemonicParsing="false" onAction="#handleButtonUpdate" styleClass="cancel" text="Alterar" />
+                  <Button fx:id="buttonCadastrar" layoutX="302.0" mnemonicParsing="false" onAction="#handleButtonRegister" styleClass="register" text="Cadastrar" />
                </children>
             </Group>
          </children></AnchorPane>
