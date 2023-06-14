@@ -2,6 +2,7 @@ package src.javafxmvc.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -9,7 +10,12 @@ import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.util.Callback;
-
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -33,22 +39,17 @@ import src.javafxmvc.model.database.Database;
 import src.javafxmvc.model.database.DatabaseFactory;
 
 public class AnchorPanePagamentoController implements Initializable {
-
+    // Declaração dos elementos da interface gráfica
     @FXML
     private TableView<Pagamento> tableViewPagamentos;
-
     @FXML
     private TableColumn<Pagamento, String> tableColumnPagData;
-
     @FXML
     private TableColumn<Pagamento, String> tableColumnPagValor;
-
     @FXML
     private TableColumn<Pagamento, String> tableColumnPagIdAluno;
-
     @FXML
     private TableColumn<Pagamento, String> tableColumnPagNomeAluno;
-
 
     //Atributos para manipulação de Banco de Dados
     private final Database database = DatabaseFactory.getDatabase("postgresql");
@@ -56,66 +57,79 @@ public class AnchorPanePagamentoController implements Initializable {
     private final PagamentoDAO pagamentoDAO = new PagamentoDAO();
     private final AlunoDAO alunoDAO = new AlunoDAO();
 
-
+    // Listas e objetos para manipulação dos dados
     private List<Pagamento> listPagamentos;
     private ObservableList<Pagamento> observableListPagamentos;
         
-
+    // Método de inicialização do controller, executado quando a view é carregada
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Configura as conexões com o banco de dados
         pagamentoDAO.setConnection(connection);
         alunoDAO.setConnection(connection);
 
+        // Carrega os pagamentos na table view
         loadTableViewPagamentos();
     }
 
+    // Método que carrega a tableview pagamentos
     public void loadTableViewPagamentos() {
+        // Define as propriedades das colunas da tabela
         tableColumnPagData.setCellValueFactory(new PropertyValueFactory<>("data"));
         tableColumnPagValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
         tableColumnPagIdAluno.setCellValueFactory(new PropertyValueFactory<>("aluno_id"));
         tableColumnPagNomeAluno.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Pagamento, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Pagamento, String> param) {
+                 // Obtém o nome do aluno com base no ID do aluno associado ao pagamento
                 String nomeAluno = alunoDAO.findById(param.getValue().getAluno_id()).getNome();
                 return new SimpleStringProperty(nomeAluno);
             }
         });
         
+        // Obtém a lista de pagamentos do banco de dados
         listPagamentos = pagamentoDAO.list();
 
-        /* Populate TableView */
+        // Popula a TableView 
         observableListPagamentos = FXCollections.observableArrayList(listPagamentos);
         tableViewPagamentos.setItems(observableListPagamentos);
     }
 
+    // Método que carrega o diálogo para inserção
     @FXML
     public void handleButtonRegister() throws IOException {
         Pagamento pagamento = new Pagamento();
+        // Exibe uma caixa de diálogo para inserir os dados do pagamento
         boolean buttonConfirmarClicked = showDialog(pagamento, 0);
         if (buttonConfirmarClicked) {
+            // Salva o pagamento no banco de dados
             pagamentoDAO.insert(pagamento);
             showConfirmationAlert(0);
             loadTableViewPagamentos();
         }
     }
 
+    // Método que carrega o diálogo para atualização 
     @FXML
     public void handleButtonUpdate() throws IOException {
         Pagamento pagamento = tableViewPagamentos.getSelectionModel().getSelectedItem(); //Obtendo pagamento selecionado
         if (pagamento != null) {
+            // Exibe uma caixa de diálogo para atualizar os dados do pagamento
             boolean buttonConfirmarClicked = showDialog(pagamento, 1);
             if (buttonConfirmarClicked) {
+                // Atualiza o pagamento no banco de dados
                 pagamentoDAO.update(pagamento);
                 showConfirmationAlert(1);
                 loadTableViewPagamentos();
-            }
+            }        
+        // Exibe um alerta caso o pagamento seja null
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Por favor, escolha um pagamento na Tabela!");
             alert.show();
         }
     }
-
+    
     @FXML
     public void handleButtonDelete() throws IOException {
         Pagamento pagamento = tableViewPagamentos.getSelectionModel().getSelectedItem();
@@ -128,6 +142,7 @@ public class AnchorPanePagamentoController implements Initializable {
                 showConfirmationAlert(2);
                 loadTableViewPagamentos();
             }
+        // Exibe um alerta caso o pagamento seja null
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Por favor, escolha um pagamento na Tabela!");
@@ -136,10 +151,21 @@ public class AnchorPanePagamentoController implements Initializable {
     }
 
     @FXML
-    public void handleButtonPrint() throws IOException {
+    public void handleButtonPrint() throws JRException {
         Pagamento pagamento = tableViewPagamentos.getSelectionModel().getSelectedItem(); //Obtendo pagamento selecionado
         if (pagamento != null) {
-            
+            HashMap filtro = new HashMap();
+            int idpagamento = pagamento.getIdPagamento();
+        
+            filtro.put("idpagamento", idpagamento);
+
+            URL url = getClass().getResource("../reports/ComprovantePagamento.jasper");
+            JasperReport jasperReport = (JasperReport) JRLoader.loadObject(url);
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, filtro, connection);//null: caso não existam filtros
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);//false: não deixa fechar a aplicação principal
+            jasperViewer.setVisible(true);
+        // Exibe um alerta caso o pagamento seja null
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Por favor, escolha um pagamento na Tabela!");

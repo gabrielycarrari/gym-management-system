@@ -180,6 +180,7 @@ public class AnchorPaneFuncDialogController implements Initializable {
         labelErroSenhaConfirmada.setText(null);
     }
 
+    // Método responsável por validar os dados inseridos pelo usuário
     public boolean validateData(){
         int qdtErros = 0;
 
@@ -257,6 +258,7 @@ public class AnchorPaneFuncDialogController implements Initializable {
         }
     }
 
+    // Método responsável por validar o formato do cpf
     public static boolean validateCPFFormat(String cpf) {
         String cleanedCPF = cpf.replaceAll("\\D", "");
 
@@ -267,6 +269,7 @@ public class AnchorPaneFuncDialogController implements Initializable {
         return true;
     }
 
+    // Método responsável por converter para o formato do cpf o texto inserido pelo usuário
     public String convertToCPF(String inputString) {
         String cleanedString = inputString.replaceAll("\\D", "");
 
