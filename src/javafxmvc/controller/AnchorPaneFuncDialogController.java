@@ -87,6 +87,7 @@ public class AnchorPaneFuncDialogController implements Initializable {
         return dialogStage;
     }
 
+    // Define o Stage do diálogo
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
@@ -104,6 +105,7 @@ public class AnchorPaneFuncDialogController implements Initializable {
         
     }
 
+    // Retorna o funcionário
     public Funcionario getFuncionario() {
         return this.funcionario;
     }

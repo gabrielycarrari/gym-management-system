@@ -95,7 +95,7 @@ public class AnchorPanePagamentoController implements Initializable {
         tableViewPagamentos.setItems(observableListPagamentos);
     }
 
-    // Método que carrega o diálogo para inserção
+    // Método que chama o diálogo para a inserção
     @FXML
     public void handleButtonRegister() throws IOException {
         Pagamento pagamento = new Pagamento();
@@ -109,10 +109,11 @@ public class AnchorPanePagamentoController implements Initializable {
         }
     }
 
-    // Método que carrega o diálogo para atualização 
+    // Método que chama o diálogo para a atualização 
     @FXML
     public void handleButtonUpdate() throws IOException {
-        Pagamento pagamento = tableViewPagamentos.getSelectionModel().getSelectedItem(); //Obtendo pagamento selecionado
+        // Obtendo pagamento selecionado
+        Pagamento pagamento = tableViewPagamentos.getSelectionModel().getSelectedItem(); 
         if (pagamento != null) {
             // Exibe uma caixa de diálogo para atualizar os dados do pagamento
             boolean buttonConfirmarClicked = showDialog(pagamento, 1);
@@ -130,13 +131,18 @@ public class AnchorPanePagamentoController implements Initializable {
         }
     }
     
+    // Método responsável por apagar um pagamento 
     @FXML
     public void handleButtonDelete() throws IOException {
+        // Obtendo pagamento selecionado
         Pagamento pagamento = tableViewPagamentos.getSelectionModel().getSelectedItem();
         if (pagamento != null) {
+            // Exibe um alert de confirmação
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("Tem certeza que deseja remover este pagamento?");
+            // Aguarda a resposta do usuário 
             Optional<ButtonType> result = alert.showAndWait();
+            // Apaga o pagamento caso seja confirmado 
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 pagamentoDAO.delete(pagamento);
                 showConfirmationAlert(2);
@@ -150,20 +156,26 @@ public class AnchorPanePagamentoController implements Initializable {
         }
     }
 
+    // Método que imprimi o comprovante de pagamento
     @FXML
     public void handleButtonPrint() throws JRException {
-        Pagamento pagamento = tableViewPagamentos.getSelectionModel().getSelectedItem(); //Obtendo pagamento selecionado
+        //Obtendo pagamento selecionado
+        Pagamento pagamento = tableViewPagamentos.getSelectionModel().getSelectedItem(); 
         if (pagamento != null) {
             HashMap filtro = new HashMap();
             int idpagamento = pagamento.getIdPagamento();
         
+            // Setando o filtro com base no id do pagamento selecionado
             filtro.put("idpagamento", idpagamento);
 
+            // Define a url do comprovante
             URL url = getClass().getResource("../reports/ComprovantePagamento.jasper");
+            // Carrega o comprovante 
             JasperReport jasperReport = (JasperReport) JRLoader.loadObject(url);
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, filtro, connection);//null: caso não existam filtros
-            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);//false: não deixa fechar a aplicação principal
+            // Define o filtro
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, filtro, connection); // null: caso não existam filtros
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);// false: não deixa fechar a aplicação principal
             jasperViewer.setVisible(true);
         // Exibe um alerta caso o pagamento seja null
         } else {
@@ -173,6 +185,7 @@ public class AnchorPanePagamentoController implements Initializable {
         }
     }
 
+    // Método responsável por carregar o diálogo
     public boolean showDialog(Pagamento pagamento, int button) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(AnchorPanePagamentoDialogController.class.getResource("../view/AnchorPanePagamentoDialog.fxml"));
@@ -184,11 +197,12 @@ public class AnchorPanePagamentoController implements Initializable {
 
         Scene scene = new Scene(page);
         dialogStage.setScene(scene);
-
-        // Setando o pagamento no Controller.
-        AnchorPanePagamentoDialogController controller = loader.getController();
+        
+        AnchorPanePagamentoDialogController controller = loader.getController(); 
         controller.setDialogStage(dialogStage); 
+        // Setando o título de acordo com o botão selecionado
         controller.setTitle(button);
+        // Setando o pagamento no Controller.
         controller.setPagamento(pagamento);
 
 
@@ -199,21 +213,23 @@ public class AnchorPanePagamentoController implements Initializable {
 
     }
 
+    // Método responsável por carregar o alert de sucesso para as operações
     public void showConfirmationAlert(int button) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         String title;
         String content;
 
+        // Define de acordo com o botão, o título e o conteúdo do alert
         switch (button) {
-            case 0:
+            case 0: // Caso o botão seja de inserir
                 title = "Pagamento Registrado";
                 content = "Seu pagamento foi registrado com sucesso!";
                 break;
-            case 1:
+            case 1: // Caso o botão seja de alterar
                 title = "Pagamento Alterado";
                 content = "Seu pagamento foi alterado com sucesso!";
                 break;
-            case 2:
+            case 2: // Caso o botão seja de apagar
                 title = "Pagamento Apagado";
                 content = "Seu pagamento foi apagado com sucesso!";
                 break;
@@ -223,12 +239,15 @@ public class AnchorPanePagamentoController implements Initializable {
                 break;
         }
         
+        // Setando o título e o conteúdo
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
 
+        // Exibe o alert
         alert.showAndWait();
 
+        // Aguarda a confirmação do usuário para fechar
         if (alert.getResult() == ButtonType.OK) {
             alert.close();
         }
